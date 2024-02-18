@@ -45,13 +45,10 @@ public class AdressesDAO {
     };
 
     public Adresses create(NewAdresses adresses) {
-        //Insère une nouvelle adresse dans la db
-        //Pas besoin d'initialiser l'ID puisqu'il est en auto_incr dans la BDD
-
         AdressesDTO adresses1 = null;
         Adresses adresses2 = null;
 
-        final String sqlQuery = "INSERT INTO address (nomRue, nomBatiment, numRue, complement, codePostal, ville) VALUES (?,?,?,?,?,?)";
+        final String sqlQuery = "INSERT INTO adresses (nomRue, nomBatiment, numRue, complement, codePostal, ville) VALUES (?,?,?,?,?,?)";
         int resultCreation = this.jdbcTemplate.update(
                 sqlQuery,
                 adresses.getNomRue(),
@@ -62,9 +59,7 @@ public class AdressesDAO {
                 adresses.getVille()
         );
 
-        if (resultCreation == 1) { //J'attends un résultat de type Address
-            //Mais comme je récupère un objet de type AddressDTO, il faut que je le retransforme en Address
-            //Donc double mapping, mais je peux créer un mapper qui fait NewAddressToAddress
+        if (resultCreation == 1) {
             adresses1 = mapperAdressesAvecAdressesDTO.NewAdressesToDTO(adresses);
             adresses2 = mapperAdressesAvecAdressesDTO.DTOToAdresses(adresses1);
         }
@@ -115,9 +110,10 @@ public class AdressesDAO {
 
     public Adresses getOne(int id){
         Adresses adresses =null;
-        String sqlQuery = "SELECT * FROM adresses WHERE idAdresse=" + id;
-        List<AdressesDTO> dtos = this.jdbcTemplate.query(sqlQuery, this.rowMapper);
-        if (dtos != null && dtos.size() == 1) {
+        String sqlQuery = "SELECT * FROM adresses WHERE idAdresse= ?";
+        Object[] param = new Object[]{id};
+        List<AdressesDTO> dtos = this.jdbcTemplate.query(sqlQuery, param, this.rowMapper);
+        if (dtos != null && !dtos.isEmpty()) {
             adresses = mapperAdressesAvecAdressesDTO.DTOToAdresses(dtos.get(0));
         }
 
@@ -125,26 +121,20 @@ public class AdressesDAO {
     }
 
     public List<Adresses> getAll() {
-        //Lis les informations de toutes les adresses de la BDD
         List<Adresses> listAdresses = null;
         Adresses resp = null;
+        String sqlQuery = "SELECT * FROM adresses";
 
-        String sqlQuery = "SELECT * FROM address";
+        List<AdressesDTO> dtos = this.jdbcTemplate.query(sqlQuery,this.rowMapper );
 
-        List<AdressesDTO> dtos = this.jdbcTemplate.query(
-                sqlQuery,
-                this.rowMapper
-        );
-
-        if (dtos != null && dtos.size() > 0) {
+        if(dtos != null && dtos.size() > 0) {
             listAdresses = new ArrayList<Adresses>();
 
-            for(AdressesDTO dto : dtos) {
+            for (AdressesDTO dto : dtos) {
                 resp = mapperAdressesAvecAdressesDTO.DTOToAdresses(dto);
                 listAdresses.add(resp);
             }
         }
         return listAdresses;
     }
-
 }

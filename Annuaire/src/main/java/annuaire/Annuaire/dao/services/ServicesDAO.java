@@ -48,14 +48,15 @@ public class ServicesDAO {
 
     public Services getOne (int id) {
         Services service = null;
-        String sqlQuery = "SELECT * FROM services WHERE idService = " + id;
-
+        String sqlQuery = "SELECT * FROM services WHERE idService = ?";
+        Object[] param = new Object[]{id};
         List<ServicesDTO> dtos = this.jdbcTemplate.query(
                 sqlQuery,
+                param,
                 this.rowMapper
         );
 
-        if (dtos != null && dtos.size() == 1) {
+        if (dtos != null && !dtos.isEmpty()) {
             service = mapperServicesAvecServicesDTO.DTOToService(dtos.get(0));
         }
         return service;

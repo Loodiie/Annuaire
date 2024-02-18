@@ -1,14 +1,12 @@
 package annuaire.Annuaire.dao.affiliation;
 
 import annuaire.Annuaire.controller.affiliation.model.Affiliation;
-//import annuaire.Annuaire.controller.employees.model.Employees;
 import annuaire.Annuaire.dao.adresses.model.AdressesDTO;
 import annuaire.Annuaire.dao.affiliation.model.AffiliationDTO;
-//import annuaire.Annuaire.dao.employees.model.EmployeesDTO;
+import annuaire.Annuaire.dao.employees.model.EmployeesDTO;
 import annuaire.Annuaire.dao.services.model.ServicesDTO;
-//import annuaire.Annuaire.dao.sites.model.SitesDTO;
+import annuaire.Annuaire.dao.sites.model.SitesDTO;
 import annuaire.Annuaire.mapper.MapperAffiliationAvecAffiliationDTO;
-//import annuaire.Annuaire.mapper.MapperEmployeesAvecEmployeesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -32,27 +30,26 @@ public class AffiliationDAO {
     private final RowMapper<AffiliationDTO> rowMapper = (rs, rowNum) -> {
         final AffiliationDTO affiliation = new AffiliationDTO();
 
-//        EmployeeDTO employeeDTO = new EmployeeDTO();
-//        employeeDTO.setIdEmployee(rs.getInt("employee.id_employee"));
-//        employeeDTO.setFirstName(rs.getString("employee.first_name"));
-//        employeeDTO.setLastName(rs.getString("employee.last_name"));
-//        employeeDTO.setJobEmployee(rs.getString("employee.job"));
-//        employeeDTO.setServiceEmployee(rs.getInt("employee.service_employee"));
-//        employeeDTO.setPhoneEmployee(rs.getString("employee.phone_employee"));
-//        employeeDTO.setCellphoneEmployee(rs.getString("employee.cellphone_employee"));
-//        employeeDTO.setEmailEmployee(rs.getString("employee.email_employee"));
-//        employeeDTO.setBirthDate(rs.getTimestamp("employee.birthdate"));
-//        employeeDTO.setHiringDate(rs.getTimestamp("employee.hiring_date"));
-//        employeeDTO.setAdminApplication(rs.getBoolean("employee.admin_application"));
-//
-//        WorksiteDTO worksiteDTO = new WorksiteDTO();
-//        worksiteDTO.setIdWorksite(rs.getInt("worksite.id_worksite"));
-//        worksiteDTO.setNameWorksite(rs.getString("worksite.name_worksite"));
-//        worksiteDTO.setTypeWorksite(rs.getString("worksite.type_worksite"));
-//        worksiteDTO.setPhoneWorksite(rs.getString("worksite.phone_worksite"));
-//        worksiteDTO.setEmailWorksite(rs.getString("worksite.email_worksite"));
-//        worksiteDTO.setIdAddress(rs.getInt("worksite.address_worksite"));
-//
+        EmployeesDTO employeesDTO = new EmployeesDTO();
+        employeesDTO.setIdEmployee(rs.getInt("employees.idEmploye"));
+        employeesDTO.setNomEmployee(rs.getString("employees.nomEmploye"));
+        employeesDTO.setPrenomEmployee(rs.getString("employees.prenomEmploye"));
+        employeesDTO.setIdService(rs.getInt("employees.idService"));
+        employeesDTO.setPosteEmployee(rs.getString("employees.posteEmploye"));
+        employeesDTO.setFixeEmployee(rs.getString("employees.fixeEmploye"));
+        employeesDTO.setMailEmployee(rs.getString("employees.mailEmploye"));
+        employeesDTO.setDateNaissance(rs.getTimestamp("employees.dateNaissance"));
+        employeesDTO.setDateEmbauche(rs.getTimestamp("employees.dateEmbauche"));
+        employeesDTO.setAdmin(rs.getBoolean("employees.admin"));
+
+        SitesDTO sitesDTO = new SitesDTO();
+        sitesDTO.setIdSite(rs.getInt("sites.idSite"));
+        sitesDTO.setNomSite(rs.getString("sites.nomSite"));
+        sitesDTO.setTelSite(rs.getString("sites.telSite"));
+        sitesDTO.setMailSite(rs.getString("sites.mailSite"));
+        sitesDTO.setTypeSite(rs.getString("sites.typeSite"));
+        sitesDTO.setIdAdresse(rs.getInt("sites.idAdresse"));
+
         ServicesDTO servicesDTO = new ServicesDTO();
         servicesDTO.setIdService(rs.getInt("services.idService"));
         servicesDTO.setNomService(rs.getString("services.nomService"));
@@ -72,22 +69,22 @@ public class AffiliationDAO {
         adressesDTO.setCodePostal(rs.getString("adresses.codePostal"));
         adressesDTO.setVille(rs.getString("adresses.ville"));
 
-//        always.setEmployeeDTO(employeeDTO);
+        affiliation.setEmployeesDTO(employeesDTO);
         affiliation.setServicesDTO(servicesDTO);
-//        always.setWorksiteDTO(worksiteDTO);
+        affiliation.setSitesDTO(sitesDTO);
         affiliation.setAdressesDTO(adressesDTO);
 
         return affiliation;
     };
-    public List<Affiliation> getALlInfos(Integer idEmployee, Integer idService, Integer idSite, String nomEmploye, String nomService, String nomSite) {
-        List<Affiliation> listAlways = null;
+    public List<Affiliation> getAllInfos(Integer idEmployee, Integer idService, Integer idSite, String nomEmploye, String nomService, String nomSite ) {
+        List<Affiliation> listAffiliations = null;
         Affiliation resp = null;
 
         String sqlQuery = "SELECT employees.*, services.*, sites.*, adresses.* " +
-                "FROM employees employees " +
-                "JOIN services services ON employees.SERVICES_EMPLOYEE = services.IDSERVICE " +
-                "JOIN adresses adresses ON services.ADRESSES_SERVICE = adresses.IDADRESSE " +
-                "JOIN sites sites ON services.SITES_OF_SERVICE = sites.IDSITE";
+                "FROM employees " +
+                "JOIN services ON employees.idService = services.IdService " +
+                "JOIN adresses ON services.idAdresse = adresses.IDADRESSE " +
+                "JOIN sites ON services.idSite = sites.IdSite";
 
         boolean whereAdded = false; // Utilisé pour gérer l'ajout correct de la clause WHERE
 
@@ -96,15 +93,15 @@ public class AffiliationDAO {
             whereAdded = true;
         }
         if (idService != null && idService != 0) {
-            sqlQuery += (whereAdded ? " AND" : " WHERE") + " services.idService = " + idService;
+            sqlQuery += (whereAdded ? " AND" : " WHERE") + " services.IdService = " + idService;
             whereAdded = true;
         }
         if (idSite != null && idSite != 0) {
-            sqlQuery += (whereAdded ? " AND" : " WHERE") + " sites.idSite = " + idSite;
+            sqlQuery += (whereAdded ? " AND" : " WHERE") + " sites.IdSite = " + idSite;
             whereAdded = true;
         }
         if (nomEmploye != null && !nomEmploye.isEmpty()) {
-            sqlQuery += (whereAdded ? " AND" : " WHERE") + " (employees.prenom LIKE '%" + nomEmploye + "%' OR employees.nom LIKE '%" + nomEmploye + "%')";
+            sqlQuery += (whereAdded ? " AND" : " WHERE") + " (employees.nomEmploye LIKE '%" + nomEmploye + "%')";
             whereAdded = true;
         }
         if (nomService != null && !nomService.isEmpty()) {
@@ -121,14 +118,14 @@ public class AffiliationDAO {
         );
 
         if (dtos != null && dtos.size() > 0) {
-            listAlways = new ArrayList<Affiliation>();
+            listAffiliations = new ArrayList<>();
 
             for (AffiliationDTO dto : dtos) {
                 resp = mapperAffiliationAvecAffiliationDTO.DTOToAffiliation(dto);
-                listAlways.add(resp);
+                listAffiliations.add(resp);
             }
         }
-        return listAlways;
+        return listAffiliations;
     }
 
 }

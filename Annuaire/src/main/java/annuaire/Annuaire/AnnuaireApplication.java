@@ -12,6 +12,8 @@ public class AnnuaireApplication {
 
 	MapperAdressesAvecAdressesDTO mapperAdresses = new MapperAdressesAvecAdressesDTO();
 	MapperServicesAvecServicesDTO mapperServices = new MapperServicesAvecServicesDTO();
+	MapperSitesAvecSitesDTO mapperSite = new MapperSitesAvecSitesDTO();
+	MapperEmployeesAvecEmployeesDTO mapperEmployees = new MapperEmployeesAvecEmployeesDTO();
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnnuaireApplication.class, args);
@@ -21,25 +23,23 @@ public class AnnuaireApplication {
 	public MapperAdressesAvecAdressesDTO mapperAdressesAvecAdressesDTO(){
 		return new MapperAdressesAvecAdressesDTO();
 	}
-//	@Bean
-//	public MapperSitesAvecSitesDTO mapperSitesAvecSitesDTO(){
-//		return new MapperSitesAvecSitesDTO();
-//	}
+	@Bean
+	public MapperSitesAvecSitesDTO mapperSitesAvecSitesDTO(){
+		return new MapperSitesAvecSitesDTO();
+	}
 	@Bean
 	public MapperServicesAvecServicesDTO mapperServicesAvecServicesDTO() {
 		return new MapperServicesAvecServicesDTO();
 	}
-//	@Bean
-//	public MapperEmployeesAvecEmployeesDTO mapperEmployeesAvecEmployeesDTO() {
-//		return new MapperEmployeesAvecEmployeesDTO();
-//	}
+	@Bean
+	public MapperEmployeesAvecEmployeesDTO mapperEmployeesAvecEmployeesDTO() {
+		return new MapperEmployeesAvecEmployeesDTO();
+	}
 	@Bean
 	public MapperAffiliationAvecAffiliationDTO mapperAffiliationAvecAffiliationDTO() {
 		return new MapperAffiliationAvecAffiliationDTO(
-				mapperAdresses, mapperServices
+				mapperAdresses, mapperServices, mapperSite, mapperEmployees
 		);
 	}
-
-
 
 }

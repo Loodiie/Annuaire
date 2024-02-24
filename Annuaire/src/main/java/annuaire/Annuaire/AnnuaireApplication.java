@@ -10,18 +10,12 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class AnnuaireApplication {
 
-	MapperAdressesAvecAdressesDTO mapperAdresses = new MapperAdressesAvecAdressesDTO();
 	MapperServicesAvecServicesDTO mapperServices = new MapperServicesAvecServicesDTO();
 	MapperSitesAvecSitesDTO mapperSite = new MapperSitesAvecSitesDTO();
 	MapperEmployeesAvecEmployeesDTO mapperEmployees = new MapperEmployeesAvecEmployeesDTO();
 
 	public static void main(String[] args) {
 		SpringApplication.run(AnnuaireApplication.class, args);
-	}
-
-	@Bean
-	public MapperAdressesAvecAdressesDTO mapperAdressesAvecAdressesDTO(){
-		return new MapperAdressesAvecAdressesDTO();
 	}
 	@Bean
 	public MapperSitesAvecSitesDTO mapperSitesAvecSitesDTO(){
@@ -38,7 +32,7 @@ public class AnnuaireApplication {
 	@Bean
 	public MapperAffiliationAvecAffiliationDTO mapperAffiliationAvecAffiliationDTO() {
 		return new MapperAffiliationAvecAffiliationDTO(
-				mapperAdresses, mapperServices, mapperSite, mapperEmployees
+				mapperServices, mapperSite, mapperEmployees
 		);
 	}
 

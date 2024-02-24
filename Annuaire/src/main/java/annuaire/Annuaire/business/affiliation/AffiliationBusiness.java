@@ -1,7 +1,7 @@
 package annuaire.Annuaire.business.affiliation;
 
 import annuaire.Annuaire.controller.affiliation.model.Affiliation;
-import annuaire.Annuaire.dao.adresses.AdressesDAO;
+
 import annuaire.Annuaire.dao.affiliation.AffiliationDAO;
 import annuaire.Annuaire.dao.employees.EmployeesDAO;
 import annuaire.Annuaire.dao.services.ServicesDAO;
@@ -17,13 +17,12 @@ public class AffiliationBusiness {
     private final EmployeesDAO employeesDAO;
     private final ServicesDAO servicesDAO;
     private final SitesDAO sitesDAO;
-    private final AdressesDAO adressesDAO;
+;
 
     @Autowired
-    public AffiliationBusiness (AffiliationDAO affiliationDAO, ServicesDAO servicesDAO, AdressesDAO adressesDAO, SitesDAO sitesDAO, EmployeesDAO employeesDAO) {
+    public AffiliationBusiness (AffiliationDAO affiliationDAO, ServicesDAO servicesDAO, SitesDAO sitesDAO, EmployeesDAO employeesDAO) {
         this.affiliationDAO = affiliationDAO;
         this.servicesDAO = servicesDAO;
-        this.adressesDAO = adressesDAO;
         this.sitesDAO = sitesDAO;
         this.employeesDAO = employeesDAO;
     }

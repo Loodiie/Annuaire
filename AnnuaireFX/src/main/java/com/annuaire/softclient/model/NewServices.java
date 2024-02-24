@@ -1,5 +1,4 @@
 package com.annuaire.softclient.model;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -7,8 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.Timestamp;
 
-public class Services {
-    private final SimpleIntegerProperty idService;
+public class NewServices {
+
     private final SimpleStringProperty nomService;
     private final SimpleStringProperty typeService;
     private final SimpleStringProperty mailService;
@@ -17,8 +16,7 @@ public class Services {
     private final SimpleIntegerProperty idAdresse;
     private final SimpleIntegerProperty idSite;
 
-    public Services(
-            @JsonProperty("idService") int idService,
+    public NewServices(
             @JsonProperty("nomService") String nomService,
             @JsonProperty("typeService") String typeService,
             @JsonProperty("mailService") String mailService,
@@ -27,7 +25,6 @@ public class Services {
             @JsonProperty("idAdresse") int idAdresse,
             @JsonProperty("idSite") int idSite
     ) {
-        this.idService = new SimpleIntegerProperty(idService);
         this.nomService = new SimpleStringProperty(nomService);
         this.typeService = new SimpleStringProperty(typeService);
         this.mailService = new SimpleStringProperty(mailService);
@@ -36,19 +33,6 @@ public class Services {
         this.idAdresse = new SimpleIntegerProperty(idAdresse);
         this.idSite = new SimpleIntegerProperty(idSite);
     }
-
-    public int getIdService() {
-        return idService.get();
-    }
-
-    public SimpleIntegerProperty idServiceProperty() {
-        return idService;
-    }
-
-    public void setIdService(int idService) {
-        this.idService.set(idService);
-    }
-
     public String getNomService() {
         return nomService.get();
     }

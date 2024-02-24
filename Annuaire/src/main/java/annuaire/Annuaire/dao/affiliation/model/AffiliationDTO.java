@@ -1,23 +1,16 @@
 package annuaire.Annuaire.dao.affiliation.model;
 
-import annuaire.Annuaire.dao.adresses.model.AdressesDTO;
+
 import annuaire.Annuaire.dao.services.model.ServicesDTO;
 import annuaire.Annuaire.dao.sites.model.SitesDTO;
 import annuaire.Annuaire.dao.employees.model.EmployeesDTO;
 
 public class AffiliationDTO {
-    AdressesDTO adressesDTO;
+
     ServicesDTO servicesDTO;
     SitesDTO sitesDTO;
     EmployeesDTO employeesDTO;
 
-    public AdressesDTO getAdressesDTO() {
-        return adressesDTO;
-    }
-
-    public void setAdressesDTO(AdressesDTO adressesDTO) {
-        this.adressesDTO = adressesDTO;
-    }
 
     public ServicesDTO getServicesDTO() {
         return servicesDTO;

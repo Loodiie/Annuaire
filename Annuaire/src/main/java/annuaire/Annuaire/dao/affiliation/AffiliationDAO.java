@@ -1,7 +1,6 @@
 package annuaire.Annuaire.dao.affiliation;
 
 import annuaire.Annuaire.controller.affiliation.model.Affiliation;
-import annuaire.Annuaire.dao.adresses.model.AdressesDTO;
 import annuaire.Annuaire.dao.affiliation.model.AffiliationDTO;
 import annuaire.Annuaire.dao.employees.model.EmployeesDTO;
 import annuaire.Annuaire.dao.services.model.ServicesDTO;
@@ -48,7 +47,8 @@ public class AffiliationDAO {
         sitesDTO.setTelSite(rs.getString("sites.telSite"));
         sitesDTO.setMailSite(rs.getString("sites.mailSite"));
         sitesDTO.setTypeSite(rs.getString("sites.typeSite"));
-        sitesDTO.setIdAdresse(rs.getInt("sites.idAdresse"));
+        sitesDTO.setVilleSite(rs.getString("sites.villeSite"));
+
 
         ServicesDTO servicesDTO = new ServicesDTO();
         servicesDTO.setIdService(rs.getInt("services.idService"));
@@ -57,22 +57,11 @@ public class AffiliationDAO {
         servicesDTO.setMailService(rs.getString("services.mailService"));
         servicesDTO.setTelService(rs.getString("services.telService"));
         servicesDTO.setDateCreation(rs.getTimestamp("services.dateCreation"));
-        servicesDTO.setIdAdresse(rs.getInt("services.idAdresse"));
         servicesDTO.setIdSite(rs.getInt("services.idSite"));
-
-
-        AdressesDTO adressesDTO = new AdressesDTO();
-        adressesDTO.setIdAdresse(rs.getInt("adresses.idAdresse"));
-        adressesDTO.setNomRue(rs.getString("adresses.nomRue"));
-        adressesDTO.setNomBatiment(rs.getString("adresses.nomBatiment"));
-        adressesDTO.setNumRue(rs.getInt("adresses.numRue"));
-        adressesDTO.setCodePostal(rs.getString("adresses.codePostal"));
-        adressesDTO.setVille(rs.getString("adresses.ville"));
 
         affiliation.setEmployeesDTO(employeesDTO);
         affiliation.setServicesDTO(servicesDTO);
         affiliation.setSitesDTO(sitesDTO);
-        affiliation.setAdressesDTO(adressesDTO);
 
         return affiliation;
     };
@@ -80,10 +69,9 @@ public class AffiliationDAO {
         List<Affiliation> listAffiliations = null;
         Affiliation resp = null;
 
-        String sqlQuery = "SELECT employees.*, services.*, sites.*, adresses.* " +
+        String sqlQuery = "SELECT employees.*, services.*, sites.*" +
                 "FROM employees " +
                 "JOIN services ON employees.idService = services.IdService " +
-                "JOIN adresses ON services.idAdresse = adresses.IDADRESSE " +
                 "JOIN sites ON services.idSite = sites.IdSite";
 
         boolean whereAdded = false; // Utilisé pour gérer l'ajout correct de la clause WHERE

@@ -8,8 +8,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.sql.Timestamp;
 
-public class Employees {
-    private final SimpleIntegerProperty idEmploye;
+public class NewEmployees {
     private final SimpleStringProperty nomEmploye;
     private final SimpleStringProperty prenomEmploye;
     private final SimpleStringProperty posteEmploye;
@@ -19,9 +18,7 @@ public class Employees {
     private final SimpleObjectProperty<Timestamp> dateEmbauche;
     private final SimpleBooleanProperty admin;
     private final SimpleIntegerProperty idService;
-
-    public Employees(
-            @JsonProperty("idEmploye") int idEmploye,
+    public NewEmployees(
             @JsonProperty("nomEmploye") String nomEmploye,
             @JsonProperty("prenomEmploye") String prenomEmploye,
             @JsonProperty("posteEmploye") String posteEmploye,
@@ -31,7 +28,6 @@ public class Employees {
             @JsonProperty("dateEmbauche") Timestamp dateEmbauche,
             @JsonProperty("admin") boolean admin,
             @JsonProperty("idService") int idService) {
-        this.idEmploye = new SimpleIntegerProperty(idEmploye);
         this.nomEmploye = new SimpleStringProperty(nomEmploye);
         this.prenomEmploye = new SimpleStringProperty(prenomEmploye);
         this.posteEmploye = new SimpleStringProperty(posteEmploye);
@@ -41,18 +37,6 @@ public class Employees {
         this.dateEmbauche = new SimpleObjectProperty<>(dateEmbauche);
         this.admin = new SimpleBooleanProperty(admin);
         this.idService = new SimpleIntegerProperty(idService);
-    }
-
-    public int getIdEmploye() {
-        return idEmploye.get();
-    }
-
-    public SimpleIntegerProperty idEmployeProperty() {
-        return idEmploye;
-    }
-
-    public void setIdEmploye(int idEmploye) {
-        this.idEmploye.set(idEmploye);
     }
 
     public String getNomEmploye() {

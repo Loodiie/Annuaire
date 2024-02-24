@@ -8,7 +8,6 @@ public class NewServices {
     String mailService;
     String telService;
     Timestamp dateCreation;
-    int idAdresse;
     int idSite;
     public String getNomService() {
         return nomService;
@@ -48,14 +47,6 @@ public class NewServices {
 
     public void setDateCreation(Timestamp dateCreation) {
         this.dateCreation = dateCreation;
-    }
-
-    public int getIdAdresse() {
-        return idAdresse;
-    }
-
-    public void setIdAdresse(int idAdresse) {
-        this.idAdresse = idAdresse;
     }
 
     public int getIdSite() {

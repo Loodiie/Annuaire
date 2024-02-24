@@ -6,7 +6,7 @@ public class SitesDTO {
     String telSite;
     String mailSite;
     String typeSite;
-    int idAdresse;
+    String villeSite;
 
     public int getIdSite() {
         return idSite;
@@ -48,11 +48,11 @@ public class SitesDTO {
         this.typeSite = typeSite;
     }
 
-    public int getIdAdresse() {
-        return idAdresse;
+    public String getVilleSite() {
+        return villeSite;
     }
 
-    public void setIdAdresse(int idAdresse) {
-        this.idAdresse = idAdresse;
+    public void setVilleSite(String villeSite) {
+        this.villeSite = villeSite;
     }
 }

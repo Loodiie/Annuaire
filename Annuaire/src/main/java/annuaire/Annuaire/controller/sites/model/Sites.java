@@ -6,7 +6,7 @@ public class Sites {
     String telSite;
     String mailSite;
     String typeSite;
-    int idAdresse;
+    String villeSite;
 
     public int getIdSite() {
         return idSite;
@@ -40,19 +40,18 @@ public class Sites {
         this.mailSite = mailSite;
     }
 
-    public String getTypeSite() {
-        return typeSite;
-    }
+    public String getTypeSite() {return typeSite;}
 
     public void setTypeSite(String typeSite) {
         this.typeSite = typeSite;
     }
 
-    public int getIdAdresse() {
-        return idAdresse;
+    public String getVilleSite() {
+        return villeSite;
     }
 
-    public void setIdAdresse(int idAdresse) {
-        this.idAdresse = idAdresse;
+    public void setVilleSite(String villeSite) {
+        this.villeSite = villeSite;
     }
 }
+

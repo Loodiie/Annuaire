@@ -4,43 +4,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Sites {
-    private final SimpleIntegerProperty idSite;
+public class NewSites {
     private final SimpleStringProperty nomSite;
     private final SimpleStringProperty telSite;
     private final SimpleStringProperty mailSite;
     private final SimpleStringProperty typeSite;
     private final SimpleStringProperty villeSite;
 
-    public Sites(
-            @JsonProperty("idSite") int idSite,
+    public NewSites(
             @JsonProperty("nomSite") String nomSite,
             @JsonProperty("telSite") String telSite,
             @JsonProperty("mailSite") String mailSite,
             @JsonProperty("typeSite") String typeSite,
             @JsonProperty("villeSite") String villeSite
     ) {
-        this.idSite = new SimpleIntegerProperty(idSite);
         this.nomSite = new SimpleStringProperty(nomSite);
         this.telSite = new SimpleStringProperty(telSite);
         this.mailSite = new SimpleStringProperty(mailSite);
         this.typeSite = new SimpleStringProperty(typeSite);
         this.villeSite = new SimpleStringProperty(villeSite);
     }
-
-
-    public int getIdSite() {
-        return idSite.get();
-    }
-
-    public SimpleIntegerProperty idSiteProperty() {
-        return idSite;
-    }
-
-    public void setIdSite(int idSite) {
-        this.idSite.set(idSite);
-    }
-
     public String getNomSite() {
         return nomSite.get();
     }
@@ -101,4 +84,3 @@ public class Sites {
         this.villeSite.set(villeSite);
     }
 }
-

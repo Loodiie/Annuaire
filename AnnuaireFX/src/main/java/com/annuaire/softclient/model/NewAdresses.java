@@ -4,41 +4,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Adresses {
-    private final SimpleIntegerProperty idAdresse;
+public class NewAdresses {
     private final SimpleStringProperty nomRue;
     private final SimpleStringProperty nomBatiment;
     private final SimpleIntegerProperty numRue;
     private final SimpleStringProperty complement;
     private final SimpleStringProperty codePostal;
     private final SimpleStringProperty ville;
-    public Adresses(
-            @JsonProperty("idAdresse") int idAdresse,
+
+    public NewAdresses(
             @JsonProperty("nomRue") String nomRue,
             @JsonProperty("nomBatiment") String nomBatiment,
             @JsonProperty("numRue") Integer numRue,
             @JsonProperty("complement") String complement,
             @JsonProperty("codePostal") String codePostal,
-            @JsonProperty("ville") String ville) {
-        this.idAdresse = new SimpleIntegerProperty(idAdresse);
+            @JsonProperty("cityName") String ville) {
         this.nomRue = new SimpleStringProperty(nomRue);
         this.nomBatiment = new SimpleStringProperty(nomBatiment);
         this.numRue = new SimpleIntegerProperty(numRue);
         this.complement = new SimpleStringProperty(complement);
         this.codePostal = new SimpleStringProperty(codePostal);
         this.ville = new SimpleStringProperty(ville);
-    }
-
-    public int getIdAdresse() {
-        return idAdresse.get();
-    }
-
-    public SimpleIntegerProperty idAdresseProperty() {
-        return idAdresse;
-    }
-
-    public void setIdAdresse(int idAdresse) {
-        this.idAdresse.set(idAdresse);
     }
 
     public String getNomRue() {
@@ -69,7 +55,7 @@ public class Adresses {
         return numRue.get();
     }
 
-    public SimpleIntegerProperty NumRueProperty() {
+    public SimpleIntegerProperty lineNumRueProperty() {
         return numRue;
     }
 

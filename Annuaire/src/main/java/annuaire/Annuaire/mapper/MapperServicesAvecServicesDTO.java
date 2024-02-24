@@ -13,7 +13,6 @@ public class MapperServicesAvecServicesDTO {
         dto.setTelService(services.getTelService());
         dto.setMailService(services.getMailService());
         dto.setDateCreation(services.getDateCreation());
-        dto.setIdAdresse(services.getIdAdresse());
         dto.setIdSite(services.getIdSite());
 
         return dto;
@@ -26,7 +25,6 @@ public class MapperServicesAvecServicesDTO {
         dto.setTelService(service.getTelService());
         dto.setMailService(service.getMailService());
         dto.setDateCreation(service.getDateCreation());
-        dto.setIdAdresse(service.getIdAdresse());
         dto.setIdSite(service.getIdSite());
 
         return dto;
@@ -40,7 +38,6 @@ public class MapperServicesAvecServicesDTO {
         service.setTelService(dto.getTelService());
         service.setMailService(dto.getMailService());
         service.setDateCreation(dto.getDateCreation());
-        service.setIdAdresse(dto.getIdAdresse());
         service.setIdSite(dto.getIdSite());
 
         return service;

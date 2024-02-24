@@ -20,7 +20,6 @@ public class ServicesDAO {
     private static final String MAILSERVICE_FIELD = "mailService";
     private static final String TELSERVICE_FIELD = "telService";
     private static final String DATECREATION_FIELD = "dateCreation";
-    private static final String ADRESSESERVICE_FIELD = "idAdresse";
     private static final String SITESERVICE_FIELD = "idSite";
 
     private final JdbcTemplate jdbcTemplate;
@@ -40,7 +39,6 @@ public class ServicesDAO {
         service.setMailService(rs.getString(MAILSERVICE_FIELD));
         service.setTelService(rs.getString(TELSERVICE_FIELD));
         service.setDateCreation(rs.getTimestamp(DATECREATION_FIELD));
-        service.setIdAdresse(rs.getInt(ADRESSESERVICE_FIELD));
         service.setIdSite(rs.getInt(SITESERVICE_FIELD));
 
         return service;
@@ -88,7 +86,7 @@ public class ServicesDAO {
         ServicesDTO service1 = null;
         Services service2 = null;
 
-        final String sqlQuery = "INSERT INTO services (nomService, typeService, mailService, telService, dateCreation, idAdresse, idSite) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        final String sqlQuery = "INSERT INTO services (nomService, typeService, mailService, telService, dateCreation, idSite) VALUES (?, ?, ?, ?, ?, ?, ?)";
         int resultCreation = this.jdbcTemplate.update(
                 sqlQuery,
                 service.getNomService(),
@@ -96,7 +94,6 @@ public class ServicesDAO {
                 service.getMailService(),
                 service.getTelService(),
                 service.getDateCreation(),
-                service.getIdAdresse(),
                 service.getIdSite()
         );
 
@@ -111,7 +108,7 @@ public class ServicesDAO {
         ServicesDTO service1 = null;
         Services service2 = null;
 
-        final String sqlQuery = "UPDATE services SET nomService = ?, typeService = ?, mailService = ?, telService = ?, dateCreation = ?, idAdresse = ?, idSite = ? WHERE idService = ?";
+        final String sqlQuery = "UPDATE services SET nomService = ?, typeService = ?, mailService = ?, telService = ?, dateCreation = ?, idSite = ? WHERE idService = ?";
         int resultUpdate = this.jdbcTemplate.update(
                 sqlQuery,
                 service.getNomService(),
@@ -119,7 +116,6 @@ public class ServicesDAO {
                 service.getMailService(),
                 service.getTelService(),
                 service.getDateCreation(),
-                service.getIdAdresse(),
                 service.getIdSite(),
                 id
         );

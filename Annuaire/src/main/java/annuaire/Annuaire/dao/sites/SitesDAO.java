@@ -20,7 +20,7 @@ public class SitesDAO {
     private static final String TELSITE_FIELD = "telSite";
     private static final String MAILSITE_FIELD = "mailSite";
     private static final String TYPESITE_FIELD = "typeSite";
-    private static final String ADRESSEID_FIELD = "idAdresse";
+    private static final String VILLESITE_FIELD = "villeSite";
 
     private final JdbcTemplate jdbcTemplate;
     private final MapperSitesAvecSitesDTO mapperSitesAvecSitesDTO;
@@ -38,7 +38,7 @@ public class SitesDAO {
         sites.setTelSite(rs.getString(TELSITE_FIELD));
         sites.setMailSite(rs.getString(MAILSITE_FIELD));
         sites.setTypeSite(rs.getString(TYPESITE_FIELD));
-        sites.setIdAdresse(rs.getInt(ADRESSEID_FIELD));
+        sites.setVilleSite(rs.getString(VILLESITE_FIELD));
 
         return sites;
     };
@@ -47,15 +47,15 @@ public class SitesDAO {
         SitesDTO sites1 = null;
         Sites sites2 = null;
 
-        final String sqlQuery = "INSERT INTO sites (nomSite, telSite, mailSite, typeSIte,idAdresse) VALUES (?,?,?,?,?)";
+        final String sqlQuery = "INSERT INTO sites (nomSite, telSite, mailSite, typeSite, villeSite) VALUES (?,?,?,?,?)";
         int resultCreation = this.jdbcTemplate.update(
                 sqlQuery,
                 sites.getNomSite(),
                 sites.getTelSite(),
                 sites.getMailSite(),
                 sites.getTypeSite(),
-                sites.getIdAdresse()
-        );
+                sites.getVilleSite()
+            );
         if(resultCreation == 1){
             sites1 = mapperSitesAvecSitesDTO.NewSitesToDTO(sites);
             sites2 = mapperSitesAvecSitesDTO.DTOToSites(sites1);
@@ -67,16 +67,16 @@ public class SitesDAO {
         SitesDTO sites1 = null;
         Sites sites2 = null;
 
-        final String sqlQuery = "UPDATE sites SET nomSite =?, telSite = ?, mailSite = ?, typeSite = ?, idAdresse = ? WHERE idSite = ?";
+        final String sqlQuery = "UPDATE sites SET nomSite =?, telSite = ?, mailSite = ?, typeSite = ?, villeSite = ? WHERE idSite = ?";
         int resultUpdate = this.jdbcTemplate.update(
                 sqlQuery,
                 sites.getNomSite(),
                 sites.getTelSite(),
                 sites.getMailSite(),
                 sites.getTypeSite(),
-                sites.getIdAdresse(),
+                sites.getVilleSite(),
                 id
-        );
+            );
         if(resultUpdate ==1){
             sites1 = mapperSitesAvecSitesDTO.NewSitesToDTO(sites);
             sites2 = mapperSitesAvecSitesDTO.DTOToSites(sites1);

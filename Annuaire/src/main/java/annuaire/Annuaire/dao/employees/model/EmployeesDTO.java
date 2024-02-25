@@ -3,7 +3,7 @@ package annuaire.Annuaire.dao.employees.model;
 import java.sql.Timestamp;
 
 public class EmployeesDTO {
-    int idEmployee;
+    int idEmploye;
     String nomEmployee;
     String prenomEmployee;
     int idService;
@@ -14,12 +14,12 @@ public class EmployeesDTO {
     Timestamp dateEmbauche;
     Boolean admin;
 
-    public int getIdEmployee() {
-        return idEmployee;
+    public int getIdEmploye() {
+        return idEmploye;
     }
 
-    public void setIdEmployee(int idEmployee) {
-        this.idEmployee = idEmployee;
+    public void setIdEmploye(int idEmploye) {
+        this.idEmploye = idEmploye;
     }
 
     public String getNomEmployee() {

@@ -8,9 +8,9 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="255.0" style="-fx-background-color: #006400;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.annuaire.softclient.HeaderController">
+<AnchorPane prefHeight="800.0" prefWidth="255.0" style="-fx-background-color: #4CAF50;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.annuaire.softclient.HeaderController">
    <children>
-      <ImageView cache="true" fitHeight="110.0" fitWidth="125.0" layoutX="69.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView cache="true" fitHeight="110.0" fitWidth="125.0" layoutX="73.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/image/logo.png" />
          </image>
@@ -18,7 +18,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <Button fx:id="buttonGoToSites" alignment="CENTER" contentDisplay="RIGHT" layoutX="32.0" layoutY="155.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goToSites" prefHeight="62.0" prefWidth="196.0" style="-fx-background-radius: 25; -fx-background-color: white;" text="Sites de travail">
+      <Button fx:id="buttonGoToSites" alignment="CENTER" contentDisplay="RIGHT" layoutX="30.0" layoutY="244.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goToSites" prefHeight="62.0" prefWidth="196.0" style="-fx-background-radius: 25; -fx-background-color: #FFFFFF; -fx-text-fill: #4CAF50;" text="Sites de travail">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -32,21 +32,12 @@
          <effect>
             <DropShadow>
                <color>
-                  <Color opacity="0.800000011920929" />
+                  <Color opacity="0.8" />
                </color>
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="buttonGoToServices" alignment="CENTER" contentDisplay="RIGHT" layoutX="32.0" layoutY="264.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goToServices" prefHeight="62.0" prefWidth="196.0" style="-fx-background-radius: 25; -fx-background-color: white;" text="Nos services">
-         <font>
-            <Font name="Lucida Sans Regular" size="16.0" />
-         </font>
-         <effect>
-            <DropShadow>
-               <color>
-                  <Color opacity="0.800000011920929" />
-               </color></DropShadow>
-         </effect>
+      <Button fx:id="buttonGoToServices" alignment="CENTER" contentDisplay="RIGHT" layoutX="30.0" layoutY="346.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goToServices" prefHeight="62.0" prefWidth="196.0" style="-fx-background-radius: 25; -fx-background-color: #FFFFFF; -fx-text-fill: #4CAF50;" text="Nos services">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -54,8 +45,18 @@
                </image>
             </ImageView>
          </graphic>
+         <font>
+            <Font size="16.0" />
+         </font>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color opacity="0.8" />
+               </color>
+            </DropShadow>
+         </effect>
       </Button>
-      <Button fx:id="buttonGoToEmployees" alignment="CENTER" contentDisplay="RIGHT" layoutX="31.0" layoutY="377.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goToEmployees" prefHeight="62.0" prefWidth="196.0" style="-fx-background-radius: 25; -fx-background-color: white;" text="Nos employés">
+      <Button fx:id="buttonGoToEmployees" alignment="CENTER" contentDisplay="RIGHT" layoutX="30.0" layoutY="447.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#goToEmployees" prefHeight="62.0" prefWidth="196.0" style="-fx-background-radius: 25; -fx-background-color: #FFFFFF; -fx-text-fill: #4CAF50;" text="Nos employés">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -64,16 +65,17 @@
             </ImageView>
          </graphic>
          <font>
-            <Font name="Lucida Sans Regular" size="16.0" />
+            <Font size="16.0" />
          </font>
          <effect>
             <DropShadow>
                <color>
-                  <Color opacity="0.800000011920929" />
-               </color></DropShadow>
+                  <Color opacity="0.8" />
+               </color>
+            </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="buttonSearchResults" contentDisplay="RIGHT" layoutX="30.0" layoutY="470.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="196.0" style="-fx-background-color: white; -fx-background-radius: 25;" text="Rechercher">
+      <Button fx:id="buttonSearchResults" contentDisplay="RIGHT" layoutX="30.0" layoutY="552.0" mnemonicParsing="false" prefHeight="62.0" onAction="#searchResults" prefWidth="196.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 25; -fx-text-fill: #4CAF50;" text="Rechercher">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="26.0" pickOnBounds="true">
                <image>
@@ -87,12 +89,12 @@
          <effect>
             <DropShadow>
                <color>
-                  <Color opacity="0.800000011920929" />
+                  <Color opacity="0.8" />
                </color>
             </DropShadow>
          </effect>
       </Button>
-      <Button fx:id="buttonDeconnexion" layoutX="97.0" layoutY="720.0" mnemonicParsing="false" onAction="#disconnectUser" style="-fx-background-color: white; -fx-background-radius: 15;">
+      <Button fx:id="buttonDeconnexion" layoutX="97.0" layoutY="720.0" mnemonicParsing="false" onAction="#disconnectUser" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" text="">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true">
                <image>
@@ -103,8 +105,9 @@
          <effect>
             <DropShadow>
                <color>
-                  <Color opacity="0.800000011920929" />
-               </color></DropShadow>
+                  <Color opacity="0.8" />
+               </color>
+            </DropShadow>
          </effect>
       </Button>
    </children>

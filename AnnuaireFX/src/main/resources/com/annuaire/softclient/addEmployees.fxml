@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.annuaire.softclient.AddEmployeesController">
+    <children>
+        <ImageView fitHeight="700.0" fitWidth="800.0" opacity="0.3" pickOnBounds="true">
+            <image>
+                <Image url="@../../../assets/image/wallpaper.png" />
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="33.0" prefHeight="53.0" prefWidth="800.0" style="-fx-background-color: #008000;" text="Ajout d'un nouveau employé" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Lucida Sans Regular" size="26.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="257.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Nom " textFill="WHITE">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <TextField fx:id="nomEmployeeField" layoutX="152.0" layoutY="257.0" prefHeight="35.0" prefWidth="210.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="377.0" layoutY="257.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Prenom" textFill="WHITE">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <TextField fx:id="prenomEmployeeField" layoutX="512.0" layoutY="257.0" prefHeight="35.0" prefWidth="210.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="321.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Poste" textFill="WHITE">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <TextField fx:id="posteEmployeeField" layoutX="152.0" layoutY="321.0" prefHeight="35.0" prefWidth="210.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="388.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Email" textFill="WHITE">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <TextField fx:id="mailEmployeeField" layoutX="152.0" layoutY="388.0" prefHeight="35.0" prefWidth="567.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="453.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Date naissance" textFill="WHITE">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <Button fx:id="buttonAddEmployees" layoutX="182.0" layoutY="634.0" mnemonicParsing="false" onAction="#AddEmployees" prefHeight="43.0" prefWidth="180.0" style="-fx-background-color: #008000; -fx-background-radius: 10;" text="Ajouter l'employé" textFill="WHITE">
+            <font>
+                <Font name="Lucida Sans Regular" size="16.0" />
+            </font>
+        </Button>
+        <Button fx:id="buttonAnnuler" layoutX="422.0" layoutY="634.0" mnemonicParsing="false" onAction="#AnnulerAdd" prefHeight="43.0" prefWidth="180.0" style="-fx-background-color: #008000; -fx-background-radius: 10;" text="Annuler" textFill="WHITE">
+            <font>
+                <Font name="Lucida Sans Regular" size="16.0" />
+            </font>
+        </Button>
+        <DatePicker fx:id="dateNaissanceEmployeeField" layoutX="152.0" layoutY="453.0" prefHeight="35.0" prefWidth="210.0" />
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="26.0" layoutY="201.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Service" textFill="WHITE">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="employeeComboBox" layoutX="152.0" layoutY="201.0" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: white;" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="377.0" layoutY="321.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="N° fixe" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="fixeEmployeeField" layoutX="512.0" layoutY="321.0" prefHeight="35.0" prefWidth="210.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="377.0" layoutY="453.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Date embauche" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="dateEmbaucheEmployeeField" layoutX="512.0" layoutY="453.0" prefHeight="35.0" prefWidth="210.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="376.0" layoutY="201.0" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #008000; -fx-background-radius: 15;" text="Admin" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="adminEmployeeField" layoutX="509.0" layoutY="201.0" prefHeight="35.0" prefWidth="210.0" promptText="True / False" />
+    </children>
+</AnchorPane>

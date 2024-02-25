@@ -33,5 +33,9 @@ public class ServicesBusiness {
     public List<Services> searchServicesByNameService(String searchServiceSite) {
         return servicesDAO.searchServiceSiteByName(searchServiceSite);
     }
+    public List<Services> getServicesByWorksiteService(int id) {
+        return servicesDAO.getServicesBySites(id);
+    }
+
 
 }

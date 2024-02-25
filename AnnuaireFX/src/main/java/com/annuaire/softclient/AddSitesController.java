@@ -1,10 +1,7 @@
 package com.annuaire.softclient;
 
-import com.annuaire.softclient.dao.AdressesDAO;
 import com.annuaire.softclient.dao.SitesDAO;
-import com.annuaire.softclient.model.NewAdresses;
 import com.annuaire.softclient.model.NewSites;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -36,11 +33,9 @@ public class AddSitesController {
     private TextField typeSiteField;
 
     private final SitesDAO sitesDAO;
-    private final AdressesDAO adressesDAO;
 
     public AddSitesController() {
         this.sitesDAO = new SitesDAO();
-        this.adressesDAO = new AdressesDAO();
     }
 
 
@@ -65,7 +60,7 @@ public class AddSitesController {
             errorAlert.showAndWait();
         } catch (IOException e) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setTitle("Erreur Exception");
+            errorAlert.setTitle("Erreur Exception Site");
             errorAlert.setHeaderText(null);
             errorAlert.setContentText("Erreur lors de l'ajout du site de travail : " + e.getMessage());
             errorAlert.showAndWait();
@@ -82,12 +77,5 @@ public class AddSitesController {
         stage.close();
     }
 
-    private void displayErrorAlert(String errorMessage) {
-        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-        errorAlert.setTitle("Erreur");
-        errorAlert.setHeaderText(null);
-        errorAlert.setContentText(errorMessage);
-        errorAlert.showAndWait();
-    }
 
 }

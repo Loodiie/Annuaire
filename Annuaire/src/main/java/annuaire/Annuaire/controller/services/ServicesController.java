@@ -39,9 +39,17 @@ public class ServicesController {
     public List<Services> getAllServicesSite() {
         return servicesBusiness.getAllServicesService();
     }
+
     @GetMapping(version + "/services/searchServices")
-    public List<Services> searchServiceByName(@RequestParam String searchServices) {
-        return servicesBusiness.searchServicesByNameService(searchServices);
+    public List<Services> searchServiceSiteByName(@RequestParam String searchServiceSite) {
+        return servicesBusiness.searchServicesByNameService(searchServiceSite);
     }
+
+    @GetMapping(version + "/services/searchByServices/{idService}")
+    public List<Services> getServiceByWorksite(@PathVariable int id) {
+        return servicesBusiness.getServicesByWorksiteService(id);
+    }
+
+
 
 }

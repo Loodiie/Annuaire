@@ -6,14 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 
 public class ConnexionController {
@@ -56,22 +56,48 @@ public class ConnexionController {
         if (event.isControlDown() && event.isShiftDown()) {
             String adminPassword = "Admin";
 
-            TextInputDialog askPassAdmin = new TextInputDialog();
-            askPassAdmin.setTitle("Connexion admin");
-            askPassAdmin.setContentText("Mot de passe pour la connexion admin : ");
+            PasswordField passwordField = new PasswordField();
+            passwordField.setPromptText("Mot de passe");
 
-            askPassAdmin.showAndWait().ifPresent(passwordPrint -> {
-                if (passwordPrint.equals(adminPassword)) {
+            Dialog<String> passwordDialog = new Dialog<>();
+            passwordDialog.setTitle("Connexion admin");
+            passwordDialog.setHeaderText(null);
+            passwordDialog.getDialogPane().setContent(passwordField);
+            passwordDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+            Stage dialogStage = (Stage) passwordDialog.getDialogPane().getScene().getWindow();
+
+            try {
+                InputStream iconStream = getClass().getClassLoader().getResourceAsStream("assets/icons/icon.png");
+                if (iconStream != null) {
+                    dialogStage.getIcons().add(new Image(iconStream));
+                } else {
+                    System.out.println("Icon not found");
+                }
+            } catch (NullPointerException e) {
+                System.out.println("Error loading icon: " + e.getMessage());
+            }
+
+            passwordDialog.setResultConverter(dialogButton -> {
+                if (dialogButton == ButtonType.OK) {
+                    return passwordField.getText();
+                }
+                return null;
+            });
+
+            passwordDialog.showAndWait().ifPresent(passwordPrint -> {
+                if (passwordPrint != null && passwordPrint.equals(adminPassword)) {
                     UserSession.getInstance().setAdmin(true);
                     System.out.println(UserSession.getInstance().isAdmin());
                     goToHomePage();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText(null);
-                    alert.setContentText("Le mot de passe entré est incorrect");
-                    alert.showAndWait();
+                    Label errorMessage = new Label("Le mot de passe entré est incorrect");
+                    errorMessage.setStyle("-fx-text-fill: red;");
+                    passwordDialog.getDialogPane().setContent(errorMessage);
+                    passwordDialog.showAndWait();
                 }
             });
         }
     }
 }
+

@@ -30,13 +30,13 @@ public class AffiliationDAO {
         final AffiliationDTO affiliation = new AffiliationDTO();
 
         EmployeesDTO employeesDTO = new EmployeesDTO();
-        employeesDTO.setIdEmployee(rs.getInt("employees.idEmploye"));
-        employeesDTO.setNomEmployee(rs.getString("employees.nomEmploye"));
-        employeesDTO.setPrenomEmployee(rs.getString("employees.prenomEmploye"));
+        employeesDTO.setIdEmploye(rs.getInt("employees.idEmploye"));
+        employeesDTO.setNomEmployee(rs.getString("employees.nomEmployee"));
+        employeesDTO.setPrenomEmployee(rs.getString("employees.prenomEmployee"));
         employeesDTO.setIdService(rs.getInt("employees.idService"));
-        employeesDTO.setPosteEmployee(rs.getString("employees.posteEmploye"));
-        employeesDTO.setFixeEmployee(rs.getString("employees.fixeEmploye"));
-        employeesDTO.setMailEmployee(rs.getString("employees.mailEmploye"));
+        employeesDTO.setPosteEmployee(rs.getString("employees.posteEmployee"));
+        employeesDTO.setFixeEmployee(rs.getString("employees.fixeEmployee"));
+        employeesDTO.setMailEmployee(rs.getString("employees.mailEmployee"));
         employeesDTO.setDateNaissance(rs.getTimestamp("employees.dateNaissance"));
         employeesDTO.setDateEmbauche(rs.getTimestamp("employees.dateEmbauche"));
         employeesDTO.setAdmin(rs.getBoolean("employees.admin"));
@@ -65,7 +65,7 @@ public class AffiliationDAO {
 
         return affiliation;
     };
-    public List<Affiliation> getAllInfos(Integer idEmployee, Integer idService, Integer idSite, String nomEmploye, String nomService, String nomSite ) {
+    public List<Affiliation> getAllInfos(Integer idEmploye, Integer idService, Integer idSite, String nomEmployee, String nomService, String nomSite ) {
         List<Affiliation> listAffiliations = null;
         Affiliation resp = null;
 
@@ -76,8 +76,8 @@ public class AffiliationDAO {
 
         boolean whereAdded = false; // Utilisé pour gérer l'ajout correct de la clause WHERE
 
-        if (idEmployee != null && idEmployee != 0) {
-            sqlQuery += " WHERE employees.idEmploye = " + idEmployee;
+        if (idEmploye != null && idEmploye != 0) {
+            sqlQuery += " WHERE employees.idEmploye = " + idEmploye;
             whereAdded = true;
         }
         if (idService != null && idService != 0) {
@@ -88,8 +88,8 @@ public class AffiliationDAO {
             sqlQuery += (whereAdded ? " AND" : " WHERE") + " sites.IdSite = " + idSite;
             whereAdded = true;
         }
-        if (nomEmploye != null && !nomEmploye.isEmpty()) {
-            sqlQuery += (whereAdded ? " AND" : " WHERE") + " (employees.nomEmploye LIKE '%" + nomEmploye + "%')";
+        if (nomEmployee != null && !nomEmployee.isEmpty()) {
+            sqlQuery += (whereAdded ? " AND" : " WHERE") + " (employees.nomEmployee LIKE '%" + nomEmployee + "%')";
             whereAdded = true;
         }
         if (nomService != null && !nomService.isEmpty()) {

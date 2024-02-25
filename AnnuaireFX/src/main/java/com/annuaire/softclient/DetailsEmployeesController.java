@@ -1,13 +1,10 @@
 package com.annuaire.softclient;
 
-import com.annuaire.softclient.model.Sites;
+import com.annuaire.softclient.dao.EmployeesDAO;
 import com.annuaire.softclient.dao.ServicesDAO;
-import com.annuaire.softclient.model.Services;
-import com.annuaire.softclient.dao.SitesDAO;
 import com.annuaire.softclient.model.*;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,101 +13,90 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import javafx.animation.KeyFrame;
 
+public class DetailsEmployeesController {
 
-public class DetailsSitesController {
-
+    @FXML
+    private TextField adminEmployeeField;
 
     @FXML
     private Button buttonAnnuler;
 
     @FXML
-    private Button buttonDeleteSites;
+    private Button buttonDeleteEmploye;
 
     @FXML
-    private Button buttonUpdateSites;
+    private Button buttonUpdateEmploye;
 
     @FXML
-    private TextField idSiteField;
+    private TextField dateEmbaucheEmployeeField;
 
     @FXML
-    private TableView<Services> tableauServices;
+    private TextField dateNaissanceEmployeeField;
 
     @FXML
-    private TableColumn<Services, String> mailServiceField;
+    private TextField fixeEmployeeField;
 
     @FXML
-    private TextField mailSiteField;
+    private TextField idEmployeeField;
 
     @FXML
-    private TableColumn<Services, String> nomServiceField;
+    private TextField mailEmployeeField;
 
     @FXML
-    private TextField nomSiteField;
+    private TextField nomEmployeeField;
 
     @FXML
-    private TableColumn<Services, String> telServiceField;
+    private TextField posteEmployeeField;
 
     @FXML
-    private TextField telSiteField;
+    private TextField prenomEmployeeField1;
 
     @FXML
-    private TableColumn<Services, String> typeServiceField;
+    private TextField idServiceField;
 
     @FXML
-    private TextField typeSiteField;
+    private ComboBox<String> employeeComboBox;
 
-    @FXML
-    private TextField villeSiteField;
-
-    private Sites selectedSites;
-
-    private final SitesDAO sitesDAO = new SitesDAO();
+    private Employees selectedEmployees;
+    private final EmployeesDAO employeesDAO = new EmployeesDAO();
     private final ServicesDAO servicesDAO = new ServicesDAO();
 
-    public void initData(Sites sites) {
-        selectedSites = sites;
-
-        idSiteField.setText(String.valueOf(sites.getIdSite()));
-        nomSiteField.setText(sites.getNomSite());
-        telSiteField.setText(sites.getTelSite());
-        mailSiteField.setText(sites.getMailSite());
-        typeSiteField.setText(sites.getTypeSite());
-        villeSiteField.setText(sites.getVilleSite());
-
-    }
-
     @FXML
-    private void initialize() {
-        //Initialisation des colonnes du tableau
-        nomServiceField.setCellValueFactory(cellData -> cellData.getValue().nomServiceProperty());
-        typeServiceField.setCellValueFactory(cellData -> cellData.getValue().typeServiceProperty());
-        mailServiceField.setCellValueFactory(cellData -> cellData.getValue().mailServiceProperty());
-        telServiceField.setCellValueFactory(cellData -> cellData.getValue().telServiceProperty());
-
-
+    public void initialize() {
+        loadService();
     }
 
-    public void loadDataIntoTableService() {
-
-        int idSite = selectedSites.getIdSite();
-        if(idSite != 0) {
-            List<Services> listesServices = servicesDAO.getAllServicesBySites(idSite);
-            ObservableList<Services> servicesObservableList = FXCollections.observableArrayList(listesServices);
-            tableauServices.setItems(servicesObservableList);
-        }else {
-            Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-            successAlert.setContentText("L'id du site n'a pas été trouvé");
-
+    private void loadService() {
+        List<Services> servicesList = servicesDAO.getAllServices();
+        for (Services services : servicesList) {
+            employeeComboBox.getItems().add(services.getNomService());
         }
     }
+
+    public void initData(Employees employees) {
+        selectedEmployees = employees;
+
+        idEmployeeField.setText(String.valueOf(employees.getIdEmploye()));
+        nomEmployeeField.setText(employees.getNomEmploye());
+        prenomEmployeeField1.setText(employees.getPrenomEmploye());
+        posteEmployeeField.setText(employees.getPosteEmploye());
+        fixeEmployeeField.setText(employees.getFixeEmploye());
+        mailEmployeeField.setText(employees.getMailEmploye());
+        dateNaissanceEmployeeField.setText(String.valueOf(employees.getDateNaissance()));
+        dateEmbaucheEmployeeField.setText(String.valueOf(employees.getDateEmbauche()));
+        adminEmployeeField.setText(String.valueOf(employees.isAdmin()));
+        idServiceField.setText(String.valueOf(employees.getIdService()));
+    }
+
 
     @FXML
     void annulerDetail(ActionEvent event) {
@@ -125,7 +111,7 @@ public class DetailsSitesController {
 
     private void reloadSitesPage(Stage parentStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("sites.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("employees.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
 
@@ -137,10 +123,10 @@ public class DetailsSitesController {
     }
 
     @FXML
-    void deleteSites(ActionEvent event) throws IOException {
+    void deleteEmployee(ActionEvent event) {
         boolean isAdmin = UserSession.getInstance().isAdmin();
         if (isAdmin) {
-            int idSite = selectedSites.getIdSite();
+            int idEmploye = selectedEmployees.getIdEmploye();
 
             // Boîte de dialogue pour confirmation
             Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -152,8 +138,7 @@ public class DetailsSitesController {
             if (result.isPresent() && result.get() == ButtonType.OK) {
                 // Si l'utilisateur confirme la suppression, procéder à la suppression
                 try {
-                    sitesDAO.deleteSites(idSite);
-
+                    employeesDAO.deleteEmployees(idEmploye);
 
                     // Afficher une alerte de succès
                     Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -176,7 +161,7 @@ public class DetailsSitesController {
             }
 
         } else {
-            buttonDeleteSites.setDisable(true);
+            buttonDeleteEmploye.setDisable(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lashlabask");
             alert.setHeaderText(null);
@@ -186,21 +171,37 @@ public class DetailsSitesController {
     }
 
     @FXML
-    void updateSites(ActionEvent event) {
+    void updateEmployee(ActionEvent event) throws ParseException {
         boolean isAdmin = UserSession.getInstance().isAdmin();
         if (isAdmin) {
-            int siteId = Integer.parseInt(idSiteField.getText());
-            String nom = nomSiteField.getText();
-            String type = typeSiteField.getText();
-            String telephone = telSiteField.getText();
-            String email = mailSiteField.getText();
-            String ville = villeSiteField.getText();
+            String dateNaissance = dateNaissanceEmployeeField.getText();
+            String dateEmbauche = dateEmbaucheEmployeeField.getText();
+            SimpleDateFormat dateNaissanceFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat dateEmbaucheFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+            java.util.Date parsedDateNaissance = dateNaissanceFormat.parse(dateNaissance);
+            Timestamp timestampDateNaissance = new Timestamp(parsedDateNaissance.getTime());
+
+            java.util.Date parsedDateEmbauche = dateEmbaucheFormat.parse(dateEmbauche);
+            Timestamp timestampDateEmbauche = new Timestamp(parsedDateEmbauche.getTime());
+
+            NewEmployees newEmployees = new NewEmployees(
+                    nomEmployeeField.getText(),
+                    prenomEmployeeField1.getText(),
+                    Integer.parseInt(idServiceField.getText()),
+                    posteEmployeeField.getText(),
+                    fixeEmployeeField.getText(),
+                    mailEmployeeField.getText(),
+                    timestampDateNaissance,
+                    timestampDateEmbauche,
+                    Boolean.parseBoolean(adminEmployeeField.getText())
+            );
+
+            int employeeId = Integer.parseInt(idEmployeeField.getText());
 
             try {
-                // Créer un objet NewSites avec les nouvelles données
-                NewSites newSites = new NewSites(nom, telephone, email, type, ville);
-                // Appeler la méthode update de votre API avec les nouvelles données
-                sitesDAO.updateSites(siteId, newSites);
+                employeesDAO.updateEmployees(employeeId, newEmployees);
+                // Afficher une fenêtre pop-up de réussite
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                 successAlert.setTitle("Mise à jour réussie");
                 successAlert.setHeaderText(null);
@@ -215,7 +216,7 @@ public class DetailsSitesController {
                 System.err.println("Erreur lors de la mise à jour du site de travail : " + ex.getMessage());
             }
         } else {
-            buttonDeleteSites.setDisable(true);
+            buttonUpdateEmploye.setDisable(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lashlabask");
             alert.setHeaderText(null);
@@ -224,6 +225,5 @@ public class DetailsSitesController {
         }
     }
 }
-
 
 

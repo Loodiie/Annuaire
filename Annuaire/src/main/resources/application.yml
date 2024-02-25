@@ -4,5 +4,5 @@ spring:
     username: "admin"
     password: "admin"
 server:
-  port: 5655
+  port: 7273
 

@@ -9,6 +9,7 @@ module com.annuaire.softclient {
     requires eu.hansolo.tilesfx;
     requires java.sql;
     requires com.fasterxml.jackson.databind;
+    requires org.json;
 
     opens com.annuaire.softclient to javafx.fxml;
     exports com.annuaire.softclient;

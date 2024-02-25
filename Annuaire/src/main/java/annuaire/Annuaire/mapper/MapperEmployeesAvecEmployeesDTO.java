@@ -8,9 +8,9 @@ public class MapperEmployeesAvecEmployeesDTO {
 
     public EmployeesDTO EmployeesToDTO (Employees employees) {
         EmployeesDTO dto = new EmployeesDTO();
-        dto.setIdEmployee(employees.getIdEmployee());
+        dto.setIdEmploye(employees.getIdEmploye());
         dto.setNomEmployee(employees.getNomEmployee());
-        dto.setPrenomEmployee(employees.getNomEmployee());
+        dto.setPrenomEmployee(employees.getPrenomEmployee());
         dto.setIdService(employees.getIdService());
         dto.setPosteEmployee(employees.getPosteEmployee());
         dto.setFixeEmployee(employees.getFixeEmployee());
@@ -39,7 +39,7 @@ public class MapperEmployeesAvecEmployeesDTO {
 
     public Employees DTOToEmployees (EmployeesDTO dto) {
         Employees employees = new Employees();
-        employees.setIdEmployee(dto.getIdEmployee());
+        employees.setIdEmploye(dto.getIdEmploye());
         employees.setNomEmployee(dto.getNomEmployee());
         employees.setPrenomEmployee(dto.getPrenomEmployee());
         employees.setIdService(dto.getIdService());

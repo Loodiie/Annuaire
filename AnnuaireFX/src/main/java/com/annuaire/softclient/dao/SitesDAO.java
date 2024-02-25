@@ -19,7 +19,7 @@ import java.util.List;
 
 public class SitesDAO {
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String API_URL = "http://localhost:5655/api/v1/sites";
+    private static final String API_URL = "http://localhost:7273/api/v1/sites";
 
     public List<Sites> getAllSites() {
         //La méthode nous permet de récupérer les sites de travail avec le GET de l'API (adresse)
@@ -57,17 +57,18 @@ public class SitesDAO {
         return parseJsonArray(responseString.toString());
     }
 
-    private List<Sites> parseJsonArray(String jsonArray) {
+    private static List<Sites> parseJsonArray(String jsonArray) {
+        System.out.println("sites :" +jsonArray);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(jsonArray, new TypeReference<List<Sites>>() {
-
-            });
+            return objectMapper.readValue(jsonArray, new TypeReference<List<Sites>>() {});
         } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Une erreur s'est produite lors de la découpage du JSON . Veuillez réessayer plus tard.");
             return Collections.emptyList();
         }
     }
+
 
     public static void createSites(NewSites sites) throws IOException {
         URL url = new URL(API_URL);
@@ -131,7 +132,7 @@ public class SitesDAO {
         StringBuilder responseString = new StringBuilder();
 
         try {
-            URL url = new URL(API_URL + "/searchSites?searchSites=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
+            URL url = new URL(API_URL + "/nomSite?nomSite=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -146,12 +147,66 @@ public class SitesDAO {
                 }
                 in.close();
             } else {
-                responseString.append("Erreur de réponse de l'API. Code : ").append(responseCode);
+                responseString.append("Erreur de réponse de l'API sites. Code : ").append(responseCode);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            responseString.append("Erreur lors de l'appel à l'API : ").append(e.getMessage());
+            responseString.append("Erreur lors de l'appel à l'API sites : ").append(e.getMessage());
         }
         return parseJsonArray(responseString.toString());
     }
+
+    public int getSiteIdByName(String siteName) {
+        try {
+            // Requête pour obtenir tous les sites
+            URL url = new URL(API_URL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
+
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Lire la réponse
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+                StringBuilder response = new StringBuilder();
+                String inputLine;
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+
+                // Convertir la réponse en liste de Sites
+                List<Sites> sitesList = objectMapper.readValue(response.toString(), new TypeReference<List<Sites>>() {});
+
+                // Parcourir la liste pour trouver le site avec le nom correspondant
+                for (Sites site : sitesList) {
+                    if (site.getNomSite().equals(siteName)) {
+                        return site.getIdSite(); // Supposant que getId() retourne l'ID du site
+                    }
+                }
+            } else {
+                System.out.println("Erreur de réponse de l'API. Code : " + responseCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Erreur lors de l'appel à l'API : " + e.getMessage());
+        }
+
+        // Retourner -1 si le site n'est pas trouvé ou s'il y a eu une erreur
+        return -1;
+    }
+
+    public static Sites parseJsonString(String jsonString) {
+        try {
+            // Utilisation de Jackson ObjectMapper pour mapper la chaîne JSON vers un objet Java
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(jsonString, Sites.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

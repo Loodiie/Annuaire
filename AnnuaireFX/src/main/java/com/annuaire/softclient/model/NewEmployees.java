@@ -9,94 +9,95 @@ import javafx.beans.property.SimpleStringProperty;
 import java.sql.Timestamp;
 
 public class NewEmployees {
-    private final SimpleStringProperty nomEmploye;
-    private final SimpleStringProperty prenomEmploye;
-    private final SimpleStringProperty posteEmploye;
-    private final SimpleStringProperty fixeEmploye;
-    private final SimpleStringProperty mailEmploye;
+    private final SimpleStringProperty nomEmployee;
+    private final SimpleStringProperty prenomEmployee;
+    private final SimpleIntegerProperty idService;
+    private final SimpleStringProperty posteEmployee;
+    private final SimpleStringProperty fixeEmployee;
+    private final SimpleStringProperty mailEmployee;
     private final SimpleObjectProperty<Timestamp> dateNaissance;
     private final SimpleObjectProperty<Timestamp> dateEmbauche;
     private final SimpleBooleanProperty admin;
-    private final SimpleIntegerProperty idService;
+
     public NewEmployees(
-            @JsonProperty("nomEmploye") String nomEmploye,
-            @JsonProperty("prenomEmploye") String prenomEmploye,
-            @JsonProperty("posteEmploye") String posteEmploye,
-            @JsonProperty("fixeEmploye") String fixeEmploye,
-            @JsonProperty("mailEmploye") String mailEmploye,
+            @JsonProperty("nomEmployee") String nomEmployee,
+            @JsonProperty("prenomEmployee") String prenomEmployee,
+            @JsonProperty("idService") int idService,
+            @JsonProperty("posteEmployee") String posteEmployee,
+            @JsonProperty("fixeEmployee") String fixeEmployee,
+            @JsonProperty("mailEmployee") String mailEmployee,
             @JsonProperty("dateNaissance") Timestamp dateNaissance,
             @JsonProperty("dateEmbauche") Timestamp dateEmbauche,
-            @JsonProperty("admin") boolean admin,
-            @JsonProperty("idService") int idService) {
-        this.nomEmploye = new SimpleStringProperty(nomEmploye);
-        this.prenomEmploye = new SimpleStringProperty(prenomEmploye);
-        this.posteEmploye = new SimpleStringProperty(posteEmploye);
-        this.fixeEmploye = new SimpleStringProperty(fixeEmploye);
-        this.mailEmploye = new SimpleStringProperty(mailEmploye);
+            @JsonProperty("admin") boolean admin) {
+        this.nomEmployee = new SimpleStringProperty(nomEmployee);
+        this.prenomEmployee = new SimpleStringProperty(prenomEmployee);
+        this.posteEmployee = new SimpleStringProperty(posteEmployee);
+        this.fixeEmployee = new SimpleStringProperty(fixeEmployee);
+        this.mailEmployee = new SimpleStringProperty(mailEmployee);
         this.dateNaissance = new SimpleObjectProperty<>(dateNaissance);
         this.dateEmbauche = new SimpleObjectProperty<>(dateEmbauche);
         this.admin = new SimpleBooleanProperty(admin);
         this.idService = new SimpleIntegerProperty(idService);
     }
 
-    public String getNomEmploye() {
-        return nomEmploye.get();
+    public String getNomEmployee() {
+        return nomEmployee.get();
     }
 
     public SimpleStringProperty nomEmployeProperty() {
-        return nomEmploye;
+        return nomEmployee;
     }
 
-    public void setNomEmploye(String nomEmploye) {
-        this.nomEmploye.set(nomEmploye);
+    public void setNomEmployee(String nomEmploye) {
+        this.nomEmployee.set(nomEmploye);
     }
 
-    public String getPrenomEmploye() {
-        return prenomEmploye.get();
+    public String getPrenomEmployee() {
+        return prenomEmployee.get();
     }
 
     public SimpleStringProperty prenomEmployeProperty() {
-        return prenomEmploye;
+        return prenomEmployee;
     }
 
-    public void setPrenomEmploye(String prenomEmploye) {
-        this.prenomEmploye.set(prenomEmploye);
+    public void setPrenomEmployee(String prenomEmploye) {
+        this.prenomEmployee.set(prenomEmploye);
     }
 
-    public String getPosteEmploye() {
-        return posteEmploye.get();
+    public String getPosteEmployee() {
+        return posteEmployee.get();
     }
 
     public SimpleStringProperty posteEmployeProperty() {
-        return posteEmploye;
+        return posteEmployee;
     }
 
-    public void setPosteEmploye(String posteEmploye) {
-        this.posteEmploye.set(posteEmploye);
+    public void setPosteEmployee(String posteEmploye) {
+        this.posteEmployee.set(posteEmploye);
     }
 
-    public String getFixeEmploye() {
-        return fixeEmploye.get();
+    public String getFixeEmployee() {
+        return fixeEmployee.get();
     }
 
     public SimpleStringProperty fixeEmployeProperty() {
-        return fixeEmploye;
+        return fixeEmployee;
     }
 
-    public void setFixeEmploye(String fixeEmploye) {
-        this.fixeEmploye.set(fixeEmploye);
+    public void setFixeEmployee(String fixeEmploye) {
+        this.fixeEmployee.set(fixeEmploye);
     }
 
-    public String getMailEmploye() {
-        return mailEmploye.get();
+    public String getMailEmployee() {
+        return mailEmployee.get();
     }
 
     public SimpleStringProperty mailEmployeProperty() {
-        return mailEmploye;
+        return mailEmployee;
     }
 
-    public void setMailEmploye(String mailEmploye) {
-        this.mailEmploye.set(mailEmploye);
+    public void setMailEmployee(String mailEmploye) {
+        this.mailEmployee.set(mailEmploye);
     }
 
     public Timestamp getDateNaissance() {

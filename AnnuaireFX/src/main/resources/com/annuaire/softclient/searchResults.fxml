@@ -9,69 +9,87 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #14A1D9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.annuaire.softclient.SearchResultController">
-    <fx:include fx:id="header" source="header.fxml" />
-    <children>
-        <TabPane fx:id="resultsTable" layoutY="186.0" prefHeight="616.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="Sites de travail">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TableView fx:id="worksiteTable" prefHeight="722.0" prefWidth="1206.0" style="-fx-background-image: url=&quot;@../../../assets/image/wallpaper.jpg&quot;;">
-                                    <columns>
-                                        <TableColumn fx:id="idWorksite" prefWidth="75.0" text="N° de site" />
-                                        <TableColumn fx:id="nameWorksite" prefWidth="75.0" text="Nom du site" />
-                                        <TableColumn fx:id="typeWorksite" prefWidth="75.0" text="Type de site" />
-                                        <TableColumn fx:id="phoneWorksite" prefWidth="75.0" text="Téléphone" />
-                                        <TableColumn fx:id="emailWorksite" prefWidth="75.0" text="Email" />
-                                        <TableColumn fx:id="addressWorksite" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="-1.0" text="Adresse" visible="false" />
-                                    </columns>
-                                    <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                                    </columnResizePolicy>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Services">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TableView prefHeight="685.0" prefWidth="1206.0">
-                                    <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-                <Tab text="Employés">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                            <children>
-                                <TableView prefHeight="685.0" prefWidth="1206.0">
-                                    <columns>
-                                        <TableColumn prefWidth="75.0" text="C1" />
-                                        <TableColumn prefWidth="75.0" text="C2" />
-                                    </columns>
-                                </TableView>
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-        <Button fx:id="buttonSearch" alignment="CENTER" layoutX="359.0" layoutY="120.0" mnemonicParsing="false" onAction="#makeAResearch" prefHeight="49.0" prefWidth="483.0" style="-fx-background-color: #1F456E;" text="Recherche" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS">
-            <graphic>
-                <TextField fx:id="searchField" prefHeight="25.0" prefWidth="372.0" promptText="Chercher un site, un service, un employé... " />
-            </graphic>
-            <font>
-                <Font size="16.0" />
-            </font>
-        </Button>
-    </children>
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #F5F5DC;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.annuaire.softclient.SearchController">
+    <fx:include fx:id="header" source="header.fxml" AnchorPane.topAnchor="0.0" />
+    <TabPane fx:id="resultsTable" layoutX="256.0" layoutY="95.0" prefHeight="698.0" prefWidth="944.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="256.0" AnchorPane.rightAnchor="0.0">
+        <tabs>
+            <Tab text="Sites de travail">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+                            <TableView fx:id="tableauSite" prefHeight="650.0" prefWidth="945.0" style="-fx-background-image: url(&quot;@../../../assets/image/wallpaper.jpg&quot;);">
+                                <columns>
+                                    <TableColumn fx:id="idSite" prefWidth="75.0" text="N° de site" />
+                                    <TableColumn fx:id="nomSite" prefWidth="75.0" text="Nom du site" />
+                                    <TableColumn fx:id="telSite" prefWidth="75.0" text="Téléphone" />
+                                    <TableColumn fx:id="mailSite" prefWidth="75.0" text="Email" />
+                                    <TableColumn fx:id="typeSite" prefWidth="75.0" text="Type de site" />
+                                    <TableColumn fx:id="villeSite" prefWidth="75.0" text="Ville" />
+                                </columns>
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                </columnResizePolicy>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+            <Tab text="Services">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="951.0">
+                        <children>
+                            <TableView fx:id="tableauService" prefHeight="650.0" prefWidth="944.0">
+                                <columns>
+                                    <TableColumn fx:id="idService" prefWidth="75.0" text="N° service" />
+                                    <TableColumn fx:id="nomService" prefWidth="75.0" text="Nom du service" />
+                                    <TableColumn fx:id="typeService" prefWidth="75.0" text="Type du service" />
+                                    <TableColumn fx:id="telService" prefWidth="75.0" text="Téléphone" />
+                                    <TableColumn fx:id="mailService" prefWidth="75.0" text="Email" />
+                                    <TableColumn fx:id="dateService" prefWidth="75.0" text="Date de création" />
+                                    <TableColumn fx:id="idSiteService" prefWidth="75.0" text="ID site" visible="false" />
+                                </columns>
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                </columnResizePolicy>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+            <Tab text="Employés">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="851.0">
+                        <children>
+                            <TableView fx:id="tableauEmployees" prefHeight="651.0" prefWidth="944.0">
+                                <columns>
+                                    <TableColumn fx:id="idEmploye" prefWidth="75.0" text="N° Employé" />
+                                    <TableColumn fx:id="nomEmployee" prefWidth="75.0" text="Prénom" />
+                                    <TableColumn fx:id="prenomEmployee" prefWidth="75.0" text="Nom" />
+                                    <TableColumn fx:id="posteEmployee" prefWidth="75.0" text="Poste" />
+                                    <TableColumn fx:id="fixeEmployee" prefWidth="75.0" text="Fixe" />
+                                    <TableColumn fx:id="mailEmployee" prefWidth="75.0" text="Email" />
+                                    <TableColumn fx:id="dateNaissanceEmployee" prefWidth="75.0" text="Date naissance" />
+                                    <TableColumn fx:id="dateEmbaucheEmployee" prefWidth="75.0" text="Date embauche" />
+                                    <TableColumn fx:id="adminEmployee" prefWidth="75.0" text="Admin" visible="false" />
+                                    <TableColumn fx:id="idServiceEmployee" prefWidth="75.0" text="N° Service" visible="false" />
+                                    <TableColumn fx:id="nomServiceEmployee" prefWidth="75.0" text="Service" />
+                                </columns>
+                                <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                </columnResizePolicy>
+                            </TableView>
+                        </children>
+                    </AnchorPane>
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+    <Button fx:id="buttonSearch" alignment="CENTER" layoutX="437.0" layoutY="27.0" mnemonicParsing="false" onAction="#makeAResearch" prefHeight="49.0" prefWidth="545.0" style="-fx-background-color: #76C34A;" text="Recherche" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="437.0" AnchorPane.rightAnchor="218.0">
+        <graphic>
+            <TextField fx:id="searchField" prefHeight="25.0" prefWidth="372.0" promptText="Chercher un site, un service, un employé... " />
+        </graphic>
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Button>
 </AnchorPane>

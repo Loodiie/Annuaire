@@ -86,7 +86,7 @@ public class ServicesDAO {
         ServicesDTO service1 = null;
         Services service2 = null;
 
-        final String sqlQuery = "INSERT INTO services (nomService, typeService, mailService, telService, dateCreation, idSite) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        final String sqlQuery = "INSERT INTO services (nomService, typeService, mailService, telService, dateCreation, idSite) VALUES (?, ?, ?, ?, ?, ?)";
         int resultCreation = this.jdbcTemplate.update(
                 sqlQuery,
                 service.getNomService(),
@@ -141,11 +141,36 @@ public class ServicesDAO {
         }
     }
 
-    public List<Services> searchServiceSiteByName (String searchServiceSite) {
-        List<Services> listService = null;
+    public List<Services> searchServiceSiteByName (String serviceByName) {
+        List<Services> listServices = null;
+
+        String querySQL = "SELECT * FROM services WHERE nomService LIKE ?";
+
+        List<ServicesDTO> dtos = this.jdbcTemplate.query(
+                querySQL,
+                new Object[]{"%" + serviceByName + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
+                this.rowMapper
+        );
+
+        if (dtos != null && !dtos.isEmpty()) {
+            listServices = new ArrayList<>();
+
+            for (ServicesDTO dto : dtos) {
+                Services services = mapperServicesAvecServicesDTO.DTOToService(dto);
+                listServices.add(services);
+            }
+        }
+        return listServices;
+    }
+
+
+
+
+    public List<Services> getServicesBySites(int idSite) {
+        List<Services> listServices = null;
         Services resp = null;
 
-        String sqlQuery = "SELECT * FROM services WHERE nomService LIKE '%" + searchServiceSite +"%'" ;
+        String sqlQuery = "SELECT * FROM services WHERE idSite = " + idSite;
 
         List<ServicesDTO> dtos = this.jdbcTemplate.query(
                 sqlQuery,
@@ -153,14 +178,15 @@ public class ServicesDAO {
         );
 
         if (dtos != null && dtos.size() > 0) {
-            listService = new ArrayList<Services>();
+            listServices = new ArrayList<Services>();
 
             for (ServicesDTO dto : dtos) {
                 resp = mapperServicesAvecServicesDTO.DTOToService(dto);
-                listService.add(resp);
+                listServices.add(resp);
             }
         }
-        return listService;
+        return listServices;
     }
 
 }
+

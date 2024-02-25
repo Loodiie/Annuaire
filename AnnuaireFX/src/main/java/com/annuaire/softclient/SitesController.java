@@ -23,7 +23,8 @@ import java.util.List;
 public class SitesController {
     @FXML
     private Button buttonAddSites;
-
+    @FXML
+    private Button buttonReload;
     @FXML
     private TableView<Sites> tableauSites;
     @FXML
@@ -59,6 +60,13 @@ public class SitesController {
                 openDetails();
             }
         });
+
+        buttonReload.setOnAction(event -> reloadTableau());
+    }
+
+    @FXML
+    private void reloadTableau(){
+        loadDataIntoTable();
     }
 
     private void loadDataIntoTable() {

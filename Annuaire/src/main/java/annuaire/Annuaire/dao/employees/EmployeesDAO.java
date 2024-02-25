@@ -16,12 +16,12 @@ import java.util.List;
 @Repository
 public class EmployeesDAO {
     private static final String ID_FIELD = "idEmploye";
-    private static final String NOMEMPLOYEE_FIELD = "nomEmploye";
-    private static final String PRENOMEMPLOYEE_FIELD = "prenomEmploye";
+    private static final String NOMEMPLOYEE_FIELD = "nomEmployee";
+    private static final String PRENOMEMPLOYEE_FIELD = "prenomEmployee";
     private static final String IDSERVICE_FIELD = "idService";
-    private static final String POSTEEMPLOYEE_FIELD = "posteEmploye";
-    private static final String FIXEEMPLOYEE_FIELD = "fixeEmploye";
-    private static final String MAILEMPLOYEE_FIELD = "mailEmploye";
+    private static final String POSTEEMPLOYEE_FIELD = "posteEmployee";
+    private static final String FIXEEMPLOYEE_FIELD = "fixeEmployee";
+    private static final String MAILEMPLOYEE_FIELD = "mailEmployee";
     private static final String DATENAISSANCE_FIELD = "dateNaissance";
     private static final String DATEEMBAUCHE_FIELD = "dateEmbauche";
     private static final String ADMIN_FIELD = "admin";
@@ -38,7 +38,7 @@ public class EmployeesDAO {
 
     private final RowMapper<EmployeesDTO> rowMapper = (rs, rowNum) -> {
         final EmployeesDTO employees = new EmployeesDTO();
-        employees.setIdEmployee(rs.getInt(ID_FIELD));
+        employees.setIdEmploye(rs.getInt(ID_FIELD));
         employees.setNomEmployee(rs.getString(NOMEMPLOYEE_FIELD));
         employees.setPrenomEmployee(rs.getString(PRENOMEMPLOYEE_FIELD));
         employees.setIdService(rs.getInt(IDSERVICE_FIELD));
@@ -56,7 +56,7 @@ public class EmployeesDAO {
         EmployeesDTO employees1 = null;
         Employees employees2 = null;
 
-        final String sqlQuery = "INSERT INTO employees (nomEmploye, prenomEmploye, idService, posteEmploye, fixeEmploye, mailEmploye, dateNaissance, dateEmbauche, admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        final String sqlQuery = "INSERT INTO employees (nomEmployee, prenomEmployee, idService, posteEmployee, fixeEmployee, mailEmployee, dateNaissance, dateEmbauche, admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         int resultCreation = this.jdbcTemplate.update(
                 sqlQuery,
                 employees.getNomEmployee(),
@@ -81,7 +81,7 @@ public class EmployeesDAO {
         EmployeesDTO employees1 = null;
         Employees employees2 = null;
 
-        final String sqlQuery = "UPDATE employees SET nomEmploye = ?, prenomEmploye = ?, idService = ?, posteEmploye = ?, fixeEmploye = ?, mailEmploye = ?, dateNaissance = ?, dateEmbauche = ?, admin = ? WHERE idEmploye = ?";
+        final String sqlQuery = "UPDATE employees SET nomEmployee = ?, prenomEmployee = ?, idService = ?, posteEmployee = ?, fixeEmployee = ?, mailEmployee = ?, dateNaissance = ?, dateEmbauche = ?, admin = ? WHERE idEmploye = ?";
         int resultUpdate = this.jdbcTemplate.update(
                 sqlQuery,
                 employees.getNomEmployee(),
@@ -155,27 +155,26 @@ public class EmployeesDAO {
     }
 
 
-    public List<Employees> searchEmployeesByName (String searchEmployees) {
+    public List<Employees> searchEmployeesByName (String employeeByName) {
         List<Employees> listEmployees = null;
-        Employees resp = null;
 
-        String sqlQuery = "SELECT * FROM employees WHERE nomEmploye LIKE '%" + searchEmployees + "%' OR prenomEmploye LIKE '%" + searchEmployees + "%'";
+        String querySQL = "SELECT * FROM employees WHERE nomEmployee LIKE ? OR prenomEmployee LIKE ?";
 
         List<EmployeesDTO> dtos = this.jdbcTemplate.query(
-                sqlQuery,
+                querySQL,
+                new Object[]{"%" + employeeByName + "%", "%" + employeeByName + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
                 this.rowMapper
         );
 
-        if (dtos != null && dtos.size() > 0) {
-            listEmployees = new ArrayList<Employees>();
-
+        if (dtos != null && !dtos.isEmpty()) {
+            listEmployees = new ArrayList<>();
             for (EmployeesDTO dto : dtos) {
-                resp = mapperEmployeesAvecEmployeesDTO.DTOToEmployees(dto);
-                listEmployees.add(resp);
+                listEmployees.add(mapperEmployeesAvecEmployeesDTO.DTOToEmployees(dto));
             }
         }
         return listEmployees;
     }
+
 
 
 }

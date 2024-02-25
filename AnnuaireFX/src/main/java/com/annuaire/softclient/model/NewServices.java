@@ -13,7 +13,6 @@ public class NewServices {
     private final SimpleStringProperty mailService;
     private final SimpleStringProperty telService;
     private final SimpleObjectProperty<Timestamp> dateCreation;
-    private final SimpleIntegerProperty idAdresse;
     private final SimpleIntegerProperty idSite;
 
     public NewServices(
@@ -22,7 +21,6 @@ public class NewServices {
             @JsonProperty("mailService") String mailService,
             @JsonProperty("telService") String telService,
             @JsonProperty("dateCreation") Timestamp dateCreation,
-            @JsonProperty("idAdresse") int idAdresse,
             @JsonProperty("idSite") int idSite
     ) {
         this.nomService = new SimpleStringProperty(nomService);
@@ -30,7 +28,6 @@ public class NewServices {
         this.mailService = new SimpleStringProperty(mailService);
         this.telService = new SimpleStringProperty(telService);
         this.dateCreation = new SimpleObjectProperty<>(dateCreation);
-        this.idAdresse = new SimpleIntegerProperty(idAdresse);
         this.idSite = new SimpleIntegerProperty(idSite);
     }
     public String getNomService() {
@@ -93,17 +90,6 @@ public class NewServices {
         this.dateCreation.set(dateCreation);
     }
 
-    public int getIdAdresse() {
-        return idAdresse.get();
-    }
-
-    public SimpleIntegerProperty idAdresseProperty() {
-        return idAdresse;
-    }
-
-    public void setIdAdresse(int idAdresse) {
-        this.idAdresse.set(idAdresse);
-    }
 
     public int getIdSite() {
         return idSite.get();

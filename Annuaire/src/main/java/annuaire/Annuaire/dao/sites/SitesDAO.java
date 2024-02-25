@@ -124,23 +124,28 @@ public class SitesDAO {
         return listSites;
     }
 
-    public List<Sites> searchSitesByName(String searchSites){
+    public List<Sites> searchSitesByName(String nomSite){
         List<Sites> listSites = null;
-        Sites resp = null;
 
-        String sqlQuery = "SELECT * FROM sites WHERE nomSIte LIKE'%" + searchSites +"%'";
-        List<SitesDTO> dtos = this.jdbcTemplate.query(sqlQuery, this.rowMapper);
+        String querySQL = "SELECT * FROM sites WHERE nomSite LIKE ?";
 
-        if(dtos != null && dtos.size() >0){
-            listSites = new ArrayList<Sites>();
+        List<SitesDTO> dtos = this.jdbcTemplate.query(
+                querySQL,
+                new Object[]{"%" + nomSite + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
+                this.rowMapper
+        );
 
-            for(SitesDTO dto : dtos){
-                resp = mapperSitesAvecSitesDTO.DTOToSites(dto);
-                listSites.add(resp);
+        if (dtos != null && !dtos.isEmpty()) {
+            listSites = new ArrayList<>();
+
+            for (SitesDTO dto : dtos) {
+                Sites worksite = mapperSitesAvecSitesDTO.DTOToSites(dto);
+                listSites.add(worksite);
             }
         }
         return listSites;
     }
+
 
 
 }

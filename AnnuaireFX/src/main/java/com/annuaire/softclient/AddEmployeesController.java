@@ -88,10 +88,30 @@ public class AddEmployeesController {
             String selectedServiceName = employeeComboBox.getValue();
             int idService = servicesDAO.getServiceIdByName(selectedServiceName);
 
+            // Vérification que les champs de téléphone ne contiennent que des chiffres (max 10)
+            if (!isNumeric(fixeEmployee)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Veuillez entre un numéro de téléphone ou une adresse mail valide.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            // Vérification que le champ de l'email contient une adresse email valide
+            if (!isValidEmail(mailEmployee)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Veuillez entre un numéro de téléphone ou une adresse mail valide.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+
             NewEmployees employees = new NewEmployees(nomEmployee, prenomEmployee, idService, posteEmployee, fixeEmployee, mailEmployee, dateNaissance,dateEmbauche, admin);
-            System.out.println("NTM : " + employees);
             employeesDAO.createEmployees(employees);
-            System.out.println("NTGM : " + employees);
+
 
             Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
             successAlert.setTitle("Succès");
@@ -119,5 +139,19 @@ public class AddEmployeesController {
         Stage stage = (Stage) buttonAnnuler.getScene().getWindow();
         stage.close();
     }
+
+    // Vérification que les champs de téléphone ne contiennent que des chiffres (max 10)
+    private boolean isNumeric(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    // Vérification qu'une adresse email est valide
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier une adresse email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
+    }
+
+
 
 }

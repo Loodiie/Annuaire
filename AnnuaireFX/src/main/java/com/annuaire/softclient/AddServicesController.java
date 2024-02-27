@@ -73,6 +73,26 @@ public class AddServicesController {
             String selectedSiteName = siteComboBox.getValue();
             int idSite = sitesDAO.getSiteIdByName(selectedSiteName);
 
+            if (!isNumeric(telService)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Veuillez entre un numéro de téléphone ou une adresse mail valide.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            // Vérification que le champ de l'email contient une adresse email valide
+            if (!isValidEmail(mailService)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Veuillez entre un numéro de téléphone ou une adresse mail valide.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+
             NewServices services = new NewServices(nomService, typeService, mailService, telService, dateCreation, idSite);
             servicesDAO.createServices(services);
 
@@ -96,4 +116,16 @@ public class AddServicesController {
         errorAlert.setContentText(message);
         errorAlert.showAndWait();
     }
+
+    private boolean isNumeric(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    // Vérification qu'une adresse email est valide
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier une adresse email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
+    }
+
 }

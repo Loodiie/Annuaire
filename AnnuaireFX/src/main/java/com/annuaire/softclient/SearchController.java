@@ -161,7 +161,7 @@ public class SearchController {
         List<Services> searchResultServices = servicesDAO.searchServiceSiteByName(searchTerm);
         System.out.println("services : " + searchTerm);
         updateTableServices(searchResultServices);
-        List<Employees> searchResultEmployees = employeesDAO.searchEmployeeByNameService(searchTerm);
+        List<Employees> searchResultEmployees = employeesDAO.searchServiceByName(searchTerm);
         System.out.println("employees : " + searchTerm);
         updateTableEmployees(searchResultEmployees);
 

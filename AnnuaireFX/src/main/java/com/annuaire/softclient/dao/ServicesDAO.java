@@ -222,7 +222,7 @@ public class ServicesDAO {
 
         try {
             // Construire l'URL avec le terme de recherche encodé
-            URL url = new URL(API_URL + "/serviceByName?serviceByName=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
+            URL url = new URL(API_URL + "/searchServices?searchServices=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -260,15 +260,17 @@ public class ServicesDAO {
     }
 
 
-    private static List<Services> parseJsonArray(String jsonArray) {
-        System.out.println("Services :" +jsonArray);
+    private List<Services> parseJsonArray(String jsonArray) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(jsonArray, new TypeReference<List<Services>>() {});
+            return objectMapper.readValue(jsonArray, new TypeReference<List<Services>>() {
+
+            });
         } catch (IOException e) {
-            System.err.println("Une erreur s'est produite lors de la découpage du JSON . Veuillez réessayer plus tard.");
+            e.printStackTrace();
             return Collections.emptyList();
         }
     }
+
 
 }

@@ -25,8 +25,6 @@ public class ServicesController {
     @FXML
     private Button buttonAddService;
     @FXML
-    private Button buttonReload;
-    @FXML
     private TableView<Services> tableauServices;
     @FXML
     private TableColumn<Services, String> nomServiceField;
@@ -65,12 +63,6 @@ public class ServicesController {
             }
         });
 
-        buttonReload.setOnAction(event -> reloadTableau());
-    }
-
-    @FXML
-    private void reloadTableau(){
-        loadDataIntoTable();
     }
 
     private void loadDataIntoTable() {
@@ -132,7 +124,8 @@ public class ServicesController {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setTitle("Détails du Sites");
-                stage.show();
+                stage.showAndWait();
+                loadDataIntoTable();
             } catch (IOException e) {
                 e.printStackTrace();
             }

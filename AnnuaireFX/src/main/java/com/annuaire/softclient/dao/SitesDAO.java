@@ -1,5 +1,7 @@
 package com.annuaire.softclient.dao;
 
+import com.annuaire.softclient.model.Employees;
+import com.annuaire.softclient.model.Services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.annuaire.softclient.model.NewSites;
@@ -57,18 +59,32 @@ public class SitesDAO {
         return parseJsonArray(responseString.toString());
     }
 
-    private static List<Sites> parseJsonArray(String jsonArray) {
-        System.out.println("sites :" +jsonArray);
+    public Sites getSitesById(int idSite) {
+        StringBuilder responseString = new StringBuilder();
+
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(jsonArray, new TypeReference<List<Sites>>() {});
+            URL url = new URL(API_URL + "/" + idSite);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+                String inputLine;
+                while ((inputLine = in.readLine()) != null) {
+                    responseString.append(inputLine);
+                }
+                in.close();
+            } else {
+                responseString.append("Erreur de réponse de l'API. Code : ").append(responseCode);
+            }
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Une erreur s'est produite lors de la découpage du JSON . Veuillez réessayer plus tard.");
-            return Collections.emptyList();
+            responseString.append("Erreur lors de l'appel de l'API : ").append(e.getMessage());
         }
+        Sites responseServiceSite = parseJsonString(responseString.toString());
+        return responseServiceSite;
     }
-
 
     public static void createSites(NewSites sites) throws IOException {
         URL url = new URL(API_URL);
@@ -132,7 +148,8 @@ public class SitesDAO {
         StringBuilder responseString = new StringBuilder();
 
         try {
-            URL url = new URL(API_URL + "/nomSite?nomSite=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
+            // Construire l'URL avec le terme de recherche encodé
+            URL url = new URL(API_URL + "/searchSites?searchSites=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
@@ -147,14 +164,16 @@ public class SitesDAO {
                 }
                 in.close();
             } else {
-                responseString.append("Erreur de réponse de l'API sites. Code : ").append(responseCode);
+                responseString.append("Erreur de réponse de l'API services. Code : ").append(responseCode);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            responseString.append("Erreur lors de l'appel à l'API sites : ").append(e.getMessage());
+            responseString.append("Erreur lors de l'appel à l'API services : ").append(e.getMessage());
         }
+
         return parseJsonArray(responseString.toString());
     }
+
 
     public int getSiteIdByName(String siteName) {
         try {
@@ -206,6 +225,18 @@ public class SitesDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    private List<Sites> parseJsonArray(String jsonArray) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(jsonArray, new TypeReference<List<Sites>>() {
+
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         }
     }
 

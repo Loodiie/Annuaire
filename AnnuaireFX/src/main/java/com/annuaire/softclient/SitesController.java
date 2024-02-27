@@ -24,8 +24,6 @@ public class SitesController {
     @FXML
     private Button buttonAddSites;
     @FXML
-    private Button buttonReload;
-    @FXML
     private TableView<Sites> tableauSites;
     @FXML
     private TableColumn<Sites, String> nomSite;
@@ -61,12 +59,6 @@ public class SitesController {
             }
         });
 
-        buttonReload.setOnAction(event -> reloadTableau());
-    }
-
-    @FXML
-    private void reloadTableau(){
-        loadDataIntoTable();
     }
 
     private void loadDataIntoTable() {
@@ -128,7 +120,8 @@ public class SitesController {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setTitle("Détails du Sites");
-                stage.show();
+                stage.showAndWait();
+                loadDataIntoTable();
             } catch (IOException e) {
                 e.printStackTrace();
             }

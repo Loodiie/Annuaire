@@ -27,8 +27,8 @@ public class AffiliationBusiness {
         this.employeesDAO = employeesDAO;
     }
 
-    public List<Affiliation> getALlInfosService(Integer idEmploye, Integer idService, Integer idSite, String nomEmploye, String nomService, String nomSite) {
-        return affiliationDAO.getAllInfos(idEmploye, idService, idSite, nomEmploye, nomService, nomSite);
+    public List<Affiliation> getALlInfosService(Integer idEmploye, Integer idService, Integer idSite, String nomEmployee, String nomService, String nomSite) {
+        return affiliationDAO.getAllInfos(idEmploye, idService, idSite, nomEmployee, nomService, nomSite);
     }
 
 }

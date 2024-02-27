@@ -128,53 +128,53 @@ public class EmployeesDAO {
     }
 
     public Employees updateEmployees (int idEmploye, NewEmployees employees) throws IOException {
-        URL url = new URL(API_URL + "/" + idEmploye);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("PUT");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);
+        URL url = new URL (API_URL + "/" + idEmploye);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection ();
+        connection.setRequestMethod ("PUT");
+        connection.setRequestProperty ("Content-Type", "application/json");
+        connection.setDoOutput (true);
 
-        try (OutputStream outputStream = connection.getOutputStream()) {
-            String jsonSite = objectMapper.writeValueAsString(employees);
-            byte[] input = jsonSite.getBytes("utf-8");
-            outputStream.write(input, 0, input.length);
+        try (OutputStream outputStream = connection.getOutputStream ()) {
+            String jsonSite = objectMapper.writeValueAsString (employees);
+            byte[] input = jsonSite.getBytes ("utf-8");
+            outputStream.write (input, 0, input.length);
         }
 
-        int responseCode = connection.getResponseCode();
+        int responseCode = connection.getResponseCode ();
         if (responseCode != HttpURLConnection.HTTP_OK) {
-            throw new IOException("Échec de la requête : " + responseCode);
+            throw new IOException ("Échec de la requête : " + responseCode);
         }
-        connection.disconnect();
+        connection.disconnect ();
         return null;
     }
 
-    public List<Employees> searchEmployeeByNameService(String searchTerm) {
-        StringBuilder response = new StringBuilder();
+    public List<Employees> searchServiceByName(String searchTerm) {
+        StringBuilder responseString = new StringBuilder();
 
         try {
-            URL url = new URL(API_URL + "/employeeByName?employeeByName=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
+            URL url = new URL(API_URL + "/searchEmployees?searchEmployees=" + URLEncoder.encode(searchTerm, StandardCharsets.UTF_8));
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
 
             int responseCode = connection.getResponseCode();
-
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
                 String inputLine;
 
                 while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    responseString.append(inputLine);
                 }
                 in.close();
             } else {
-                response.append("Erreur de réponse de l'API employees. Code : ").append(responseCode);
+                responseString.append("Erreur de réponse de l'API. Code : ").append(responseCode);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            response.append("Erreur lors de l'appel à l'API employees : ").append(e.getMessage());
+            responseString.append("Erreur lors de l'appel à l'API : ").append(e.getMessage());
         }
-        return parseJsonArray(response.toString());
+        return parseJsonArray(responseString.toString());
     }
+
 
 
     public static Employees parseJsonString(String jsonString) {
@@ -187,14 +187,14 @@ public class EmployeesDAO {
         }
     }
 
-    private static List<Employees> parseJsonArray(String jsonArray) {
-        System.out.println("Employees :" +jsonArray);
-
+    private List<Employees> parseJsonArray(String jsonArray) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(jsonArray, new TypeReference<List<Employees>>() {});
+            return objectMapper.readValue(jsonArray, new TypeReference<List<Employees>>() {
+
+            });
         } catch (IOException e) {
-            System.err.println("Une erreur s'est produite lors de la découpage du JSON . Veuillez réessayer plus tard.");
+            e.printStackTrace();
             return Collections.emptyList();
         }
     }

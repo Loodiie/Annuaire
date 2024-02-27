@@ -21,10 +21,6 @@ public class ConnexionController {
     @FXML
     private Button buttonGoToHomePage;
 
-    @FXML
-    private void initialize() {
-
-    }
 
     @FXML
     private void pressButtonConnexion(ActionEvent event) {

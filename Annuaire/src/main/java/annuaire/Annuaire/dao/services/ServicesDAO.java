@@ -141,14 +141,14 @@ public class ServicesDAO {
         }
     }
 
-    public List<Services> searchServiceSiteByName (String serviceByName) {
+    public List<Services> searchServiceByName (String searchServices) {
         List<Services> listServices = null;
 
         String querySQL = "SELECT * FROM services WHERE nomService LIKE ?";
 
         List<ServicesDTO> dtos = this.jdbcTemplate.query(
                 querySQL,
-                new Object[]{"%" + serviceByName + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
+                new Object[]{"%" + searchServices + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
                 this.rowMapper
         );
 

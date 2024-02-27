@@ -30,10 +30,10 @@ public class ServicesBusiness {
     public List<Services> getAllServicesService() {
         return servicesDAO.getAll();
     }
-    public List<Services> searchServicesByNameService(String searchServiceSite) {
-        return servicesDAO.searchServiceSiteByName(searchServiceSite);
+    public List<Services> searchServicesByNameService(String searchServices) {
+        return servicesDAO.searchServiceByName(searchServices);
     }
-    public List<Services> getServicesByWorksiteService(int id) {
+    public List<Services> getServicesBySitesService(int id) {
         return servicesDAO.getServicesBySites(id);
     }
 

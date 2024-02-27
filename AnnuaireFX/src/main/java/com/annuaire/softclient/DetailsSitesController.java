@@ -75,17 +75,6 @@ public class DetailsSitesController {
     private final SitesDAO sitesDAO = new SitesDAO();
     private final ServicesDAO servicesDAO = new ServicesDAO();
 
-    public void initData(Sites sites) {
-        selectedSites = sites;
-
-        idSiteField.setText(String.valueOf(sites.getIdSite()));
-        nomSiteField.setText(sites.getNomSite());
-        telSiteField.setText(sites.getTelSite());
-        mailSiteField.setText(sites.getMailSite());
-        typeSiteField.setText(sites.getTypeSite());
-        villeSiteField.setText(sites.getVilleSite());
-
-    }
 
     @FXML
     private void initialize() {
@@ -189,39 +178,100 @@ public class DetailsSitesController {
     void updateSites(ActionEvent event) {
         boolean isAdmin = UserSession.getInstance().isAdmin();
         if (isAdmin) {
-            int siteId = Integer.parseInt(idSiteField.getText());
-            String nom = nomSiteField.getText();
-            String type = typeSiteField.getText();
-            String telephone = telSiteField.getText();
-            String email = mailSiteField.getText();
-            String ville = villeSiteField.getText();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Voulez-vous vraiment mettre à jour la fiche salarié ?");
 
-            try {
-                // Créer un objet NewSites avec les nouvelles données
-                NewSites newSites = new NewSites(nom, telephone, email, type, ville);
-                // Appeler la méthode update de votre API avec les nouvelles données
-                sitesDAO.updateSites(siteId, newSites);
-                Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                successAlert.setTitle("Mise à jour réussie");
-                successAlert.setHeaderText(null);
-                successAlert.setContentText("Le site a été mis à jour avec succès.");
-                successAlert.showAndWait();
-                // Fermer la fenêtre actuelle
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                currentStage.close();
-            } catch (IOException ex) {
-                // Gérer les erreurs lors de la mise à jour, par exemple, afficher un message d'erreur
-                ex.printStackTrace();
-                System.err.println("Erreur lors de la mise à jour du site de travail : " + ex.getMessage());
+            ButtonType buttonTypeOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            alert.getButtonTypes().setAll(buttonTypeOK, ButtonType.CANCEL);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == buttonTypeOK) {
+
+                int siteId = Integer.parseInt (idSiteField.getText ());
+                String nom = nomSiteField.getText ();
+                String type = typeSiteField.getText ();
+                String telephone = telSiteField.getText ();
+                String email = mailSiteField.getText ();
+                String ville = villeSiteField.getText ();
+
+                try {
+                    // Vérification du format du numéro de téléphone fixe
+                    if (!isNumeric(telSiteField.getText())) {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Immobilis !");
+                        errorAlert.setHeaderText(null);
+                        errorAlert.setContentText("Veuillez entre un numéro de téléphone valide.");
+                        errorAlert.showAndWait();
+                        return;
+                    }
+
+                    // Vérification du format de l'e-mail
+                    if (!isValidEmail(mailSiteField.getText())) {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setTitle("Erreur");
+                        errorAlert.setHeaderText(null);
+                        errorAlert.setContentText("L'adresse email n'est pas valide.");
+                        errorAlert.showAndWait();
+                        return;
+                    }
+                    // Créer un objet NewSites avec les nouvelles données
+                    NewSites newSites = new NewSites (nom, telephone, email, type, ville);
+                    // Appeler la méthode update de votre API avec les nouvelles données
+                    sitesDAO.updateSites (siteId, newSites);
+                    Alert successAlert = new Alert (Alert.AlertType.INFORMATION);
+                    successAlert.setTitle ("Mise à jour réussie");
+                    successAlert.setHeaderText (null);
+                    successAlert.setContentText ("Le site a été mis à jour avec succès.");
+                    successAlert.showAndWait ();
+                    // Fermer la fenêtre actuelle
+                    Stage currentStage = (Stage) ((Node) event.getSource ()).getScene ().getWindow ();
+                    currentStage.close ();
+                } catch (IOException ex) {
+                    // Gérer les erreurs lors de la mise à jour, par exemple, afficher un message d'erreur
+                    ex.printStackTrace ();
+                    System.err.println ("Erreur lors de la mise à jour du site de travail : " + ex.getMessage ());
+                }
             }
         } else {
-            buttonDeleteSites.setDisable(true);
+            buttonUpdateSites.setDisable(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lashlabask");
             alert.setHeaderText(null);
             alert.setContentText("Vous n'avez pas les droits pour modifier le site");
             alert.showAndWait();
         }
+    }
+    private boolean isNumeric(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier une adresse email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
+    }
+
+    private void showErrorAlert(String message) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Erreur");
+        errorAlert.setHeaderText(null);
+        errorAlert.setContentText(message);
+        errorAlert.showAndWait();
+    }
+
+    public void initData(Sites sites) {
+        selectedSites = sites;
+
+        idSiteField.setText(String.valueOf(sites.getIdSite()));
+        nomSiteField.setText(sites.getNomSite());
+        telSiteField.setText(sites.getTelSite());
+        mailSiteField.setText(sites.getMailSite());
+        typeSiteField.setText(sites.getTypeSite());
+        villeSiteField.setText(sites.getVilleSite());
+
     }
 }
 

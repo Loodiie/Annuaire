@@ -42,7 +42,6 @@ public class DetailsServicesController {
     @FXML
     private Button buttonUpdateSiervice;
 
-
     @FXML
     private TextField idServiceField;
 
@@ -86,6 +85,7 @@ public class DetailsServicesController {
 
     public void initData(Services services){
         selectedServices = services;
+        int idSite = services.getIdSite();
 
         idServiceField.setText(String.valueOf(services.getIdService()));
         nomServiceField.setText(services.getNomService());
@@ -201,40 +201,67 @@ public class DetailsServicesController {
     void updateService(ActionEvent event) throws ParseException {
         boolean isAdmin = UserSession.getInstance().isAdmin();
         if (isAdmin) {
-            String dateString = dateServiceField.getText();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Voulez-vous vraiment mettre à jour la fiche salarié ?");
+
+            ButtonType buttonTypeOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            alert.getButtonTypes().setAll(buttonTypeOK, ButtonType.CANCEL);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == buttonTypeOK) {
+
+                // Vérification du format du numéro de téléphone fixe et du numéro de téléphone portable
+                String telServices = telServiceField.getText();
+                if (!isNumeric(telServices) || telServices.length() != 10 ) {
+                    showErrorAlert("Veuillez entre un numéro de téléphone valide.");
+                    return;
+                }
+
+                // Vérification du format de l'e-mail
+                String mailServices = mailServiceField.getText();
+                if (!isValidEmail(mailServices)) {
+                    showErrorAlert("L'adresse e-mail n'est pas valide.");
+                    return;
+                }
+
+                String dateString = dateServiceField.getText ();
+                SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
 
                 // On converti le texte en Timestamp
-                java.util.Date parsedDate = dateFormat.parse(dateString);
-                Timestamp timestampDateCreation = new Timestamp(parsedDate.getTime());
+                java.util.Date parsedDate = dateFormat.parse (dateString);
+                Timestamp timestampDateCreation = new Timestamp (parsedDate.getTime ());
 
                 // On rappelle timestamp pour créer le nouvel objet
-                NewServices newServices = new NewServices(
-                        nomServiceField.getText(),
-                        typeServiceField.getText(),
-                        mailServiceField.getText(),
-                        telServiceField.getText(),
+                NewServices newServices = new NewServices (
+                        nomServiceField.getText (),
+                        typeServiceField.getText (),
+                        mailServiceField.getText (),
+                        telServiceField.getText (),
                         timestampDateCreation,
                         Integer.parseInt(idServiceField.getText())
                 );
 
-                int idService = Integer.parseInt(idServiceField.getText());
+                int idService = Integer.parseInt (idServiceField.getText ());
 
                 try {
-                    servicesDAO.updateServices(idService, newServices);
-                    Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-                    successAlert.setTitle("Mise à jour réussie");
-                    successAlert.setHeaderText(null);
-                    successAlert.setContentText("Le site a été mis à jour avec succès.");
-                    successAlert.showAndWait();
+                    servicesDAO.updateServices (idService, newServices);
+                    Alert successAlert = new Alert (Alert.AlertType.INFORMATION);
+                    successAlert.setTitle ("Mise à jour réussie");
+                    successAlert.setHeaderText (null);
+                    successAlert.setContentText ("Le site a été mis à jour avec succès.");
+                    successAlert.showAndWait ();
                     // Fermer la fenêtre actuelle
-                    Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                    currentStage.close();
+                    Stage currentStage = (Stage) ((Node) event.getSource ()).getScene ().getWindow ();
+                    currentStage.close ();
                 } catch (IOException ex) {
                     // Gérer les erreurs lors de la mise à jour, par exemple, afficher un message d'erreur
-                    ex.printStackTrace();
-                    System.err.println("Erreur lors de la mise à jour du site de travail : " + ex.getMessage());
+                    ex.printStackTrace ();
+                    System.err.println ("Erreur lors de la mise à jour du site de travail : " + ex.getMessage ());
                 }
+            }
         } else {
             buttonUpdateSiervice.setDisable(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -243,6 +270,24 @@ public class DetailsServicesController {
             alert.setContentText("Vous n'avez pas les droits pour modifier le site");
             alert.showAndWait();
         }
+    }
+
+    private boolean isNumeric(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier une adresse email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
+    }
+
+    private void showErrorAlert(String message) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Erreur");
+        errorAlert.setHeaderText(null);
+        errorAlert.setContentText(message);
+        errorAlert.showAndWait();
     }
 
 }

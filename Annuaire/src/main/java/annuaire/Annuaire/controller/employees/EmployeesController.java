@@ -40,7 +40,7 @@ public class EmployeesController {
     public List<Employees> getAllEmployee() {
         return employeesBusiness.getAllEmployeesService();
     }
-    @GetMapping(version + "/employees/searchEmployee")
+    @GetMapping(version + "/employees/searchEmployees")
     public List<Employees> searchEmployeeByName(@RequestParam String searchEmployees) {
         return employeesBusiness.searchEmployeesByNameService(searchEmployees);
     }

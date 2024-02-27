@@ -84,7 +84,7 @@
             </Tab>
         </tabs>
     </TabPane>
-    <Button fx:id="buttonSearch" alignment="CENTER" layoutX="437.0" layoutY="27.0" mnemonicParsing="false" onAction="#makeAResearch" prefHeight="49.0" prefWidth="545.0" style="-fx-background-color: #76C34A;" text="Recherche" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="437.0" AnchorPane.rightAnchor="218.0">
+    <Button fx:id="buttonSearch" alignment="CENTER" layoutX="437.0" layoutY="27.0" mnemonicParsing="false" onAction="#makeAResearch" prefHeight="49.0" prefWidth="545.0" style="-fx-background-color: #2E9B33;" text="Recherche" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" AnchorPane.bottomAnchor="724.0" AnchorPane.leftAnchor="437.0" AnchorPane.rightAnchor="218.0">
         <graphic>
             <TextField fx:id="searchField" prefHeight="25.0" prefWidth="372.0" promptText="Chercher un site, un service, un employé... " />
         </graphic>

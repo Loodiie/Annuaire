@@ -124,14 +124,14 @@ public class SitesDAO {
         return listSites;
     }
 
-    public List<Sites> searchSitesByName(String nomSite){
+    public List<Sites> searchSitesByName(String searchSites){
         List<Sites> listSites = null;
 
         String querySQL = "SELECT * FROM sites WHERE nomSite LIKE ?";
 
         List<SitesDTO> dtos = this.jdbcTemplate.query(
                 querySQL,
-                new Object[]{"%" + nomSite + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
+                new Object[]{"%" + searchSites + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
                 this.rowMapper
         );
 

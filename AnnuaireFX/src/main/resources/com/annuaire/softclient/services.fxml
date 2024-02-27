@@ -46,21 +46,6 @@
                         <DropShadow />
                     </effect>
                 </Button>
-                <Button fx:id="buttonReload" layoutX="889.0" layoutY="53.0" mnemonicParsing="false" onAction="#reloadTableau" prefHeight="35.0" prefWidth="40.0" style="-fx-background-radius: 25; -fx-background-color: white;">
-                    <font>
-                        <Font size="16.0" />
-                    </font>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                    <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../../../assets/icons/reload.png" />
-                            </image>
-                        </ImageView>
-                    </graphic>
-                </Button>
             </children>
         </AnchorPane>
     </children>

@@ -41,8 +41,32 @@ public class AddSitesController {
 
     public void buttonAddSites(ActionEvent actionEvent) {
         try {
+            String nomSite = nomSiteField.getText();
+            String telSite = telSiteField.getText();
+            String mailSite = mailSiteField.getText();
+            String typeSite = typeSiteField.getText();
+            String villeSite = villeSiteField.getText();
 
-            NewSites newSites = new NewSites(nomSiteField.getText(), telSiteField.getText(), mailSiteField.getText(), typeSiteField.getText(), villeSiteField.getText());
+            if (!isNumeric(telSite)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Veuillez entre un numéro de téléphone ou une adresse mail valide.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            // Vérification que le champ de l'email contient une adresse email valide
+            if (!isValidEmail(mailSite)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setTitle("Erreur");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Veuillez entre un numéro de téléphone ou une adresse mail valide.");
+                errorAlert.showAndWait();
+                return;
+            }
+
+            NewSites newSites = new NewSites(nomSite, telSite, mailSite, typeSite, villeSite);
             sitesDAO.createSites(newSites);
 
 
@@ -68,8 +92,6 @@ public class AddSitesController {
 
     }
 
-
-
     @FXML
     void AnnulerAdd(ActionEvent event){
         Scene scene = buttonAnnuler.getScene();
@@ -77,5 +99,15 @@ public class AddSitesController {
         stage.close();
     }
 
+    private boolean isNumeric(String telSite) {
+        return telSite != null && telSite.matches("\\d+") && telSite.length() == 10;
+    }
+
+    // Vérification qu'une adresse email est valide
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier une adresse email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
+    }
 
 }

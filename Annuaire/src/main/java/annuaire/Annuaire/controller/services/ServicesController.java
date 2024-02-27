@@ -41,13 +41,13 @@ public class ServicesController {
     }
 
     @GetMapping(version + "/services/searchServices")
-    public List<Services> searchServiceSiteByName(@RequestParam String searchServiceSite) {
-        return servicesBusiness.searchServicesByNameService(searchServiceSite);
+    public List<Services> searchServiceSiteByName(@RequestParam String searchServices) {
+        return servicesBusiness.searchServicesByNameService(searchServices);
     }
 
     @GetMapping(version + "/services/searchByServices/{idService}")
     public List<Services> getServiceByWorksite(@PathVariable int id) {
-        return servicesBusiness.getServicesByWorksiteService(id);
+        return servicesBusiness.getServicesBySitesService(id);
     }
 
 

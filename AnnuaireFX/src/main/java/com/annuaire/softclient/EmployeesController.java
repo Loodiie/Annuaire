@@ -33,9 +33,6 @@ public class EmployeesController {
     private Button buttonAddEmployee;
 
     @FXML
-    private Button buttonReload;
-
-    @FXML
     private TableColumn<Employees, String> fixeEmployeeField;
 
     @FXML
@@ -92,12 +89,6 @@ public class EmployeesController {
             }
         });
 
-        buttonReload.setOnAction(event -> reloadTableau());
-    }
-
-    @FXML
-    private void reloadTableau(){
-        loadDataIntoTable();
     }
 
     private void loadDataIntoTable(){
@@ -161,7 +152,8 @@ public class EmployeesController {
                 Stage stage = new Stage();
                 stage.setScene(scene);
                 stage.setTitle("Détails de l'employé");
-                stage.show();
+                stage.showAndWait();
+                loadDataIntoTable();
             } catch (IOException e) {
                 e.printStackTrace();
             }

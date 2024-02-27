@@ -155,16 +155,17 @@ public class EmployeesDAO {
     }
 
 
-    public List<Employees> searchEmployeesByName (String employeeByName) {
+    public List<Employees> searchEmployeesByName (String searchEmployees) {
         List<Employees> listEmployees = null;
 
-        String querySQL = "SELECT * FROM employees WHERE nomEmployee LIKE ? OR prenomEmployee LIKE ?";
+        String sqlQuery = "SELECT * FROM employees WHERE nomEmployee LIKE ? OR prenomEmployee LIKE ?";
 
         List<EmployeesDTO> dtos = this.jdbcTemplate.query(
-                querySQL,
-                new Object[]{"%" + employeeByName + "%", "%" + employeeByName + "%"}, // Utilisation de paramètres de requête préparée pour sécuriser
+                sqlQuery,
+                new Object[]{"%" + searchEmployees + "%", "%" + searchEmployees + "%"},
                 this.rowMapper
         );
+
 
         if (dtos != null && !dtos.isEmpty()) {
             listEmployees = new ArrayList<>();

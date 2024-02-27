@@ -82,22 +82,6 @@ public class DetailsEmployeesController {
         }
     }
 
-    public void initData(Employees employees) {
-        selectedEmployees = employees;
-
-        idEmployeeField.setText(String.valueOf(employees.getIdEmploye()));
-        nomEmployeeField.setText(employees.getNomEmploye());
-        prenomEmployeeField1.setText(employees.getPrenomEmploye());
-        posteEmployeeField.setText(employees.getPosteEmploye());
-        fixeEmployeeField.setText(employees.getFixeEmploye());
-        mailEmployeeField.setText(employees.getMailEmploye());
-        dateNaissanceEmployeeField.setText(String.valueOf(employees.getDateNaissance()));
-        dateEmbaucheEmployeeField.setText(String.valueOf(employees.getDateEmbauche()));
-        adminEmployeeField.setText(String.valueOf(employees.isAdmin()));
-        idServiceField.setText(String.valueOf(employees.getIdService()));
-    }
-
-
     @FXML
     void annulerDetail(ActionEvent event) {
         Stage popupStage = (Stage) buttonAnnuler.getScene().getWindow();
@@ -174,6 +158,18 @@ public class DetailsEmployeesController {
     void updateEmployee(ActionEvent event) throws ParseException {
         boolean isAdmin = UserSession.getInstance().isAdmin();
         if (isAdmin) {
+            // Boîte de dialogue de confirmation avec un bouton "OK"
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Voulez-vous vraiment mettre à jour la fiche salarié ?");
+
+            ButtonType buttonTypeOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            alert.getButtonTypes().setAll(buttonTypeOK, ButtonType.CANCEL);
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == buttonTypeOK) {
             String dateNaissance = dateNaissanceEmployeeField.getText();
             String dateEmbauche = dateEmbaucheEmployeeField.getText();
             SimpleDateFormat dateNaissanceFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -184,6 +180,21 @@ public class DetailsEmployeesController {
 
             java.util.Date parsedDateEmbauche = dateEmbaucheFormat.parse(dateEmbauche);
             Timestamp timestampDateEmbauche = new Timestamp(parsedDateEmbauche.getTime());
+
+            // Vérification du format du numéro de téléphone fixe
+            String fixeEmployee = fixeEmployeeField.getText();
+            if (!isNumeric(fixeEmployee) || fixeEmployee.length() != 10 ) {
+                showErrorAlert("Veuillez entre un numéro de téléphone valide.");
+                return;
+            }
+
+            // Vérification du format de l'e-mail
+            String mailemployee = mailEmployeeField.getText();
+            if (!isValidEmail(mailemployee)) {
+                showErrorAlert("L'adresse e-mail n'est pas valide.");
+                return;
+            }
+
 
             NewEmployees newEmployees = new NewEmployees(
                     nomEmployeeField.getText(),
@@ -205,7 +216,7 @@ public class DetailsEmployeesController {
                 Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
                 successAlert.setTitle("Mise à jour réussie");
                 successAlert.setHeaderText(null);
-                successAlert.setContentText("Le site a été mis à jour avec succès.");
+                successAlert.setContentText("L'employé a été mis à jour avec succès.");
                 successAlert.showAndWait();
                 // Fermer la fenêtre actuelle
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -213,17 +224,69 @@ public class DetailsEmployeesController {
             } catch (IOException ex) {
                 // Gérer les erreurs lors de la mise à jour, par exemple, afficher un message d'erreur
                 ex.printStackTrace();
-                System.err.println("Erreur lors de la mise à jour du site de travail : " + ex.getMessage());
+                System.err.println("Erreur lors de la mise à jour du l'employé : " + ex.getMessage());
+            }
             }
         } else {
             buttonUpdateEmploye.setDisable(true);
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lashlabask");
             alert.setHeaderText(null);
-            alert.setContentText("Vous n'avez pas les droits pour modifier le site");
+            alert.setContentText("Vous n'avez pas les droits pour modifier cet employé");
             alert.showAndWait();
         }
     }
+    private boolean isNumeric(String phone) {
+        return phone != null && phone.matches("\\d{10}");
+    }
+
+    private boolean isValidEmail(String email) {
+        // Expression régulière pour vérifier une adresse email
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email != null && email.matches(emailRegex);
+    }
+
+    private void showErrorAlert(String message) {
+        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+        errorAlert.setTitle("Erreur");
+        errorAlert.setHeaderText(null);
+        errorAlert.setContentText(message);
+        errorAlert.showAndWait();
+    }
+
+    public void initData(Employees employees) {
+        selectedEmployees = employees;
+        int idService = employees.getIdService ();
+
+        idEmployeeField.setText (String.valueOf (employees.getIdEmploye ()));
+        nomEmployeeField.setText (employees.getNomEmploye ());
+        prenomEmployeeField1.setText (employees.getPrenomEmploye ());
+        posteEmployeeField.setText (employees.getPosteEmploye ());
+        fixeEmployeeField.setText (employees.getFixeEmploye ());
+        mailEmployeeField.setText (employees.getMailEmploye ());
+        dateNaissanceEmployeeField.setText (String.valueOf (employees.getDateNaissance ()));
+        dateEmbaucheEmployeeField.setText (String.valueOf (employees.getDateEmbauche ()));
+        adminEmployeeField.setText (String.valueOf (employees.isAdmin ()));
+        idServiceField.setText (String.valueOf (employees.getIdService ()));
+
+        Services services = servicesDAO.getServicesById (idService);
+        if (services != null) {
+            idServiceField.setText (String.valueOf (services.getIdService ()));
+        } else {
+            idEmployeeField.setEditable (false);
+            nomEmployeeField.setEditable (false);
+            prenomEmployeeField1.setEditable (false);
+            idServiceField.setEditable (false);
+            posteEmployeeField.setEditable (false);
+            fixeEmployeeField.setEditable (false);
+            mailEmployeeField.setEditable (false);
+            dateNaissanceEmployeeField.setEditable (false);
+            dateEmbaucheEmployeeField.setEditable (false);
+            adminEmployeeField.setEditable (false);
+        }
+    }
 }
+
+
 
 

@@ -63,8 +63,8 @@
                             <TableView fx:id="tableauEmployees" prefHeight="651.0" prefWidth="944.0">
                                 <columns>
                                     <TableColumn fx:id="idEmploye" prefWidth="75.0" text="N° Employé" />
-                                    <TableColumn fx:id="nomEmployee" prefWidth="75.0" text="Prénom" />
-                                    <TableColumn fx:id="prenomEmployee" prefWidth="75.0" text="Nom" />
+                                    <TableColumn fx:id="nomEmployee" prefWidth="75.0" text="Nom" />
+                                    <TableColumn fx:id="prenomEmployee" prefWidth="75.0" text="Prenom" />
                                     <TableColumn fx:id="posteEmployee" prefWidth="75.0" text="Poste" />
                                     <TableColumn fx:id="fixeEmployee" prefWidth="75.0" text="Fixe" />
                                     <TableColumn fx:id="mailEmployee" prefWidth="75.0" text="Email" />
